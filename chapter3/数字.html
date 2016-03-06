@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>类型、值和变量</title>
+<style>
+code{background:gray;color:white;}
+</style>
+</head>
+<body>
+	<h3>JavaScript数据类型</h3>
+	<ol>
+		<li>原始类型(primitive type)：数字、字符串和布尔值</li>
+		<li>对象类型(object type)</li>
+		<li>特殊的原始值null、undefined</li>
+	</ol>
+	<p>JavaScript定义了三种类：日期(Date),正则类（RegExp)和错误类(Error)
+	</p>
+	<h3>数字</h3>
+	<p>JavaScript不区分整数值和浮点数值，当一个数字直接出现在JavaScript中，称为数字直接量(numeric literal).
+	</p>
+	<h4>整型直接量</h4>
+	<p>例如:123,34,0,-12,0xff(十六进制),0211(八进制，以0开始，跟上0~7之间的数字。但是由于某些JavaScript的实现不支持八进制，因而在EMCAScript6中，八进制直接量是禁止的。
+	</p>
+	<h4>浮点型直接量</h4>
+	<p>直接的语法表示:[digits][.digits][(E|e)[(+|-)]digits],如3.14,6.02e23
+	</p>
+	<h4>JavaScript算术运算符</h4>
+	<p>JavaScript程序使用语言本身的算术运算符来进行数字运算。包括+,-,*,/,%,除了基本的运算符外。JavaScript还提供Math对象定义的函数和常量：<br/>
+	Math.pow(2,3),Math.round(0.7),Math.ceil(.6),Math.floor(.6),Math.abs(-5),Math.min(x,y,z),Math.max(x,y,z),Math.random(),Math.PI,Math.E,Math.sqrt(3),Math.sin(0),Math.log(10),Math.LN10,Math.exp(3)
+	</p>
+	<p>JavaScript中的算术运算在溢出和下溢及被零整除时不会报错。当上溢时使用无穷大Infinity表示，负值超出了JavaScript所能表示的范围时用负无穷大(-Infinity)表示。<br/>
+	下溢是当运算结果无限接近于零并比JavaScript能表示的最小值还小的时候发生的。此时JavaScript返回0。<br/>
+	被零整除会返回Infinity或-Infinity,但是当0除以0时会返回NaN.
+	</p>
+	<h5>非数值NaN</h5>
+	<p>NaN与任何值都不想等，如何判断一个变量是不是NaN：
+	<ul>
+		<li>x!=x</li>
+		<li>isNan(x)</li>
+	</ul>
+	</p>
+	<h4>二进制浮点数和四舍五入错误</h4>
+	<p>JavaScript采用IEEE-754浮点数表示法，能够精确的表示分数1/2,1/8,但是对于1/10,1/100之一却不能精确表示。
+	<br/>例如var x=.3-.2;var y=.2-.1;var boolVal=x==y;//值为false。
+	<br/>这个问题实际上在任何使用二进制浮点数的编程语言中都会出现。
+	</p>
+	<h4>如期和时间</h4>
+	<p>JavaScript使用Date()构造函数来构造日期对象</p>
+		
+</body>
+</html>
