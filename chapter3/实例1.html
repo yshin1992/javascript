@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+	<head></head>
+	<body>
+		<script type="text/javascript">
+			var int1=12;//十进制直接量
+			var int2=0x33;//十六进制直接量
+			var int3=022;//八进制直接量
+			document.write("0x33="+int2+"\t022="+int3);
+			var f1=1.2;//浮点数直接量
+			var f2=0.2e3;
+			var f3=1000E-4;
+			document.writeln("f1="+f1+"\tf2="+f2+"\tf3="+f3);
+			//Math函数
+			document.writeln("<br/>Math.random()="+Math.random());
+			document.writeln("<br/>Math.floor(1.75)="+Math.floor(1.75));//地板函数
+			document.writeln("<br/>Math.ceil(1.22)="+Math.ceil(1.22));//天花板函数
+			document.writeln("<br/>Math.round(1.5)="+Math.round(1.5));//四舍五入
+			document.writeln("<br/>Math.sin(0)="+Math.sin(0));//sin函数
+			document.writeln("<br/>Math.pow(2,3)="+Math.pow(2,3));//指数函数
+			document.writeln("<br/>Math.E="+Math.E+"\tMath.PI="+Math.PI);//E和PI常量
+			document.writeln("<br/>Math.log(1000)="+Math.log(1000));//log函数
+			document.writeln("<br/>Math.sqrt(25)="+Math.sqrt(25));//sqrt函数
+			document.writeln("<br/>Math.abs(-112)="+Math.abs(-112));//绝对值函数
+			document.writeln("<br/>Math.exp(3)="+Math.exp(3));//e的三次幂
+			document.writeln("<br/>Math.max(1,22,10)="+Math.max(1,22,10));//最大值函数
+			document.writeln("<br/>Math.min(1,22,10)="+Math.min(1,22,10));//最小值函数
+			
+			//无穷大，零和非数值
+			var infinited_value=Number.MAX_VALUE*1.5;
+			document.write("<br/>"+infinited_value);
+			infinited_value = 1/0;
+			document.write("<br/>0/0="+(0/0));
+			document.write("<br/>Number.MIN_VALUE/2="+Number.MIN_VALUE/2);
+			
+			//浮点数错误
+			var fnum1=0.3-0.2;
+			var fnum2=0.11-0.01;
+			document.write("<br/>0.3-0.2="+(0.3-0.2));
+			document.write("<br/>0.11-0.01="+(0.11-0.01));
+			document.write("<br/>fnum1==fnum2="+(fnum1==fnum2));
+			
+			//日期和时间
+			var date1=new Date(2016,2,8);
+			document.write("<br/>new Date(2016,2,8)="+date1);
+			var now=new Date();
+			document.write("<br/>new Date()="+now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate()+" "+now.getHours() +":"+now.getMinutes()+":"+now.getSeconds()+" "+now.getMilliseconds());
+			var later=now-date1;
+			document.write("<br/>new Date()-new Date(2016,2,8)="+(later));
+		</script>
+		
+	</body>
+</html>

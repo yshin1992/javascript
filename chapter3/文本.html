@@ -5,8 +5,112 @@
 <title>文本</title>
 <style>
 code{background:gray;color:white;}
+h3{
+	counter-reset:sec;
+	counter-increment:chapter;
+}
+h3:before{
+	content:counter(chapter)  ". ";
+	margin-left:0.5em;
+}
+h4{
+	counter-increment:sec;
+}
+h4:before{
+	content:counter(chapter)"."counter(sec)". ";
+	margin-left:1em;
+}
+p{
+	margin-left:1em;
+}
+.cdiv{
+	border:1px solid;
+	width:400px;
+	white-space:pre;
+	margin-left:1em;
+}
 </style>
 </head>
 <body>
+	<h3>文本</h3>
+	<p>字符串(string)是由一组16位值组成的不可变的有序序列。JavaScript中并没有表示单个字符的"字符型"</p>
+	<h4>字符串直接量</h4>
+	<p>例如"aaa",'name="aaa"','lalala',另外字符串也可以拆分成数行来写，后面跟上"\"，再另起一行即可。如果在字符串中进行真实的换行，需要使用"\n"</p>
+	<h4>转义字符</h4>
+	<p>这里介绍几个常用的转义字符：
+		<br/>\n换行 \t制表 \oNULL \v垂直制表 \b退格符 \f换页符 \r回车符
+	</p>
+	<h4>字符串的使用</h4>
+	<p>字符串的常用属性和方法:length,indexOf(),lastIndexOf(),substring(start,end),charAt(),split(),slice(),replace(),toUpperCase()</p>
+	<h4>模式匹配</h4>
+	<p>JavaScript定义了RegExp()构造函数，用来创建表示文本匹配模式的对象。例如var patter=/\d+/g;</p>
+	<h3>布尔值</h3>
+	<h3>null和undefined</h3>
+	<p>null表示一个特殊值，描述"空值",对null执行typeof运算，返回"object"。<br/>
+	undefined是更深层次的"空值",对undefined执行typeof运算，返回"undefined"。</p>
+	<h3>全局对象</h3>
+	<p>全局对象的属性是全局定义的符号，JavaScript程序可以直接使用。
+	<ul>
+		<li>全局属性：undefined,Infinity和NaN</li>
+		<li>全局函数：isNaN(),parseInt()和eval()</li>
+		<li>构造函数：Date(),RegExp(),String(),Object()和Array()</li>
+		<li>全局对象：Math和JSON</li>
+	</ul>
+	在代码的最顶级，不在任何函数内的JavaScript代码可以使用JavaScript关键字this来引用全局对象：
+	<br/><code>var global=this;</code>
+	<br/>在浏览器窗口的JavaScript代码中Window对象充当了全局对象。这个全局对象有一个属性window引用其自身
+	，它可以替代this来引用全局对象。
+	</p>
+	<h3>包装对象</h3>
+	<p>JavaScript对象是一种复合值：它是属性或已命名值的集合。通过"."符号来引用属性值。<br/>
+	对于String,Number和Boolean值来说，在使用其直接量的方法或属性值，会将其包装成一个相应的临时对象来进行调用(和Java中的包装类相像)。</p>
+	<h3>不可变的原始值和可变的对象引用</h3>
+	<p>JavaScript中的原始值（undefined，null，布尔值，数字和字符串）与对象（包括数组和函数）有着根本的区别。
+	<br/>原始值在比较时是进行值的比较，对象在比较时比较的是其引用。</p>
+	<h3>类型转换</h3>
+	<p>JavaScript中的取值非常灵活，可以根据需要自行转换类型。
+	<br/><img src="images/convert.png" alt="convert.png"/></p>
+	<h4>转换和相等性</h4>
+	<p>JavaScript中"=="随相等的含义灵活多变。例如：
+	<br/>null==undefined //这两个值相等
+	<br/>"0"==0 //在比较前字符串转换成数字
+	<br/>0==false //在比较前布尔值转换成数字
+	<br/>"0" == false //在比较前字符串和布尔值都转换成数字
+	<br/>注意：一个值转换成另一个值并不意味着两个值是相等的，例如在if()中undefined会被转换成false，
+	但undefined!=false。
+	</p>
+	<h4>显示类型转换</h4>
+	<p>JavaScript中做显示转换最简单的方法是使用Boolean(),Number(),String()和Object()函数。</p>
+	<h4>对象转换为原始值</h4>
+	<p>对象到布尔值的转换非常简单:所有的对象（包括数组和函数）都转换为true。
+	<br/>对象到字符串和对象到数字的转换是通过调用待转换对象的一个方法来完成的。JavaScript的对象
+	继承了两个转换方法，第一个是toString(),第二个是valueOf()<br/>
+	JavaScript对象到字符串的转换过程
+	<ul>
+		<li>如果对象具有toString()方法，则调用这个方法。如果返回一个原始值，
+		JavaScript将这个值转换为字符串，并返回其字符串的结果。
+		</li>
+		<li>如果这个对象没有toString()方法，或者这个方法并不返回一个原始值，
+		那么JavaScript会调用valueOf()。如果存在这个方法，则JavaScript调用它。如果返回值是原始值，JavaScript会将这个值转换为字符串。
+		</li>
+		<li>否则，JavaScript无法从toString或valueOf获得一个原始值，它会抛出一个类型错误异常。</li>
+	</ul>
+	JavaScript将对象转换为数字，做了一样的事，只不过，它会优先使用valueOf方法
+	</p>
+	<h4>变量声明</h4>
+	<p>JavaScript使用var关键字对变量进行声明，如果没有使用var进行声明，这个变量会被认为是全局变量。</p>
+	<h4>变量的作用域</h4>
+	<p>JavaScript没有块级作用域,函数作用域有一个特性，局部变量在整个函数体内都是有定义的，不论他定义的位置。实例
+		<div class="cdiv">
+			var scope="global";
+			function f2(){
+				console.log(scope);//undefined
+				var scope="local";
+				console.log(scope);
+			}
+		</div>
+	</p>
+	<h4>作为属性的变量</h4>
+	<p>当声明一个全局变量时，实际上是定义了全局对象的一个属性。当通过var声明一个变量时，创建的这个属性是不可配置的（无法通过delete删除）。如果一个给一个未声明的变量赋值的话，JavaScript会自动创建一个全局变量。</p>
 </body>
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+	<head></head>
+	<body>
+		<script type="text/javascript">
+			var str1="Hahhha";//字符串直接量
+			var str2="Halld\0dss";
+			document.write(str2);
+			document.write("<br/>str1.charAt(3)="+str1.charAt(3));
+			document.write("<br/>str1.substring(1,4)="+str1.substring(1,4));
+			document.write("<br/>str1.indexOf('a')="+str1.indexOf('a'));
+			document.write("<br/>str1.lastIndexOf('h')="+str1.lastIndexOf('h'));
+			document.write("<br/>str1.replace('h','l')="+str1.replace('h','l'));
+			document.write("<br/>str1.toUpperCase()="+str1.toUpperCase());
+			var strArr="1,2,3,4,5,6,7";
+			var array=strArr.split(",");
+			document.write("<br/>");
+			for(var index=0;index<array.length;index++)
+			{
+				document.write(array[index]+" ");
+			}
+			//模式匹配
+			var str = "testing : 1 , 2 , 9";
+			var pattern = new RegExp(/\d+/g);
+			document.write("<br/>"+pattern.test(str));
+			document.write("<br/>"+str.search(pattern));
+			document.write("<br/>"+str.match(pattern));
+			document.write("<br/>"+str.replace(pattern,"#"));
+			document.write("<br/>"+str.split(/\D+/));
+			
+			//比较
+			document.write("<br/>null == undefined //"+(null == undefined));
+			document.write("<br/>null == 0 //"+(null == 0));
+			document.write("<br/>null == false //"+(null == false));
+			document.write("<br/>null == 'false' //"+(null == 'false'));
+			document.write("<br/>false == 'false' //"+(false == 'false'));
+			document.write("<br/>false == 0 //"+(false == 0));
+			document.write("<br/>'false' == 0 //"+('false' == 0));
+			document.write("<br/>false == '0' //"+(false == "0"));
+			
+			//对象转字符串
+			var obj1=new Object();
+			obj1.name="Jane";
+			obj1.age=18;
+			document.write("<br/>obj1= "+obj1);
+		</script>
+		
+	</body>
+</html>
