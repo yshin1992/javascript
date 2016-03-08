@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>类型、值和变量</title>
+<style>
+code{background:gray;color:white;}
+h3{
+	counter-increment:chapter;
+	counter-reset:sec;
+}
+h4{
+	counter-increment:sec;
+}
+h3:before{
+	content:"4." counter(chapter) ". ";
+	margin-left:0.5em;
+}
+h4:before{
+	content:"4." counter(chapter) "." counter(sec) ". ";
+	margin-left:1em;
+}
+p{
+	margin-left:1em;
+}
+</style>
+</head>
+<body>
+	<h3>表达式</h3>
+	<p>表达式是JavaScript中的一个短语，JavaScript解释器会将其计算出一个结果。</p>
+	<h4>原始表达式</h4>
+	<p>原始表达式是表达式的最小单位，包括直接量，常量，变量和关键字。</p>
+	<h4>对象和数组的初始化表达式</h4>
+	<p>对象和数组的初始化表达式实际上是一个新创建的对象和数组。
+	<br/>数组初始化:[];[1,2,3];[[1,2],[2,4]]
+	<br/>对象初始化: var p={x:2.3,y:1};var q={}
+	</p>
+	<h4>函数定义表达式</h4>
+	<p>函数定义表达式也可称为"函数直接量"。例如var square = function(x){return x*x;}</p>
+	<h4>属性访问表达式</h4>
+	<p>属性访问表达式运算得到一个对象属性或数组元素的值。JavaScript中有两种表示的方法:<br>
+		<code>expression.identifier</code>或<code>expression[expression]</code>
+		<br/>但是要注意.identifier只适用于要访问的属性名是合法的标识符。如果一个属性名是保留字或者包含空格和标点符号，或者是一个数字（对于数组来说），则必须使用方括号的写法。
+	</p>
+	<h4>调用表达式</h4>
+	<p>JavaScript中的调用表达式是一种调用方法或函数的语法表示，例如f(0),Math.max(x,y,z)</p>
+	<h4>创建对象表达式</h4>
+	<p>对象创建表达式：创建一个对象并调用一个函数初始化新对象的属性。例如new Object(); new Point(2,3)。<br/>
+	如果一个对象不需要传入任何参数给构造函数的话，那么这对空圆括号是可以省略掉的，例如:
+	new Date;new Object;
+	</p>
+</body>
+</html>

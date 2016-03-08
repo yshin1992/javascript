@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>类型、值和变量</title>
+<style>
+code{background:gray;color:white;}
+h3{
+	counter-increment:chapter;
+	counter-reset:sec;
+}
+h4{
+	counter-increment:sec;
+}
+h3:before{
+	content:"4." counter(chapter) ". ";
+	margin-left:0.5em;
+}
+h4:before{
+	content:"4." counter(chapter) "." counter(sec) ". ";
+	margin-left:1em;
+}
+p{
+	margin-left:1em;
+}
+</style>
+</head>
+<body>
+	<h3>算数表达式</h3>
+	<h4>"+"运算符</h4>
+	<p>一般的操作（连接字符串或者进行加法)
+	<br/>1+2 //3;<br/>"hello"+" "+"here"//hello here
+	<br/>"+"运算符会优先考虑字符串连接。//82
+	</p>
+</body>
+</html>
