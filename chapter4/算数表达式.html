@@ -23,6 +23,11 @@ h4:before{
 p{
 	margin-left:1em;
 }
+.cdiv{
+	border:1px solid blue;
+	white-space:pre;
+	margin-left:1em;
+}
 </style>
 </head>
 <body>
@@ -30,7 +35,118 @@ p{
 	<h4>"+"运算符</h4>
 	<p>一般的操作（连接字符串或者进行加法)
 	<br/>1+2 //3;<br/>"hello"+" "+"here"//hello here
-	<br/>"+"运算符会优先考虑字符串连接。//82
+	<br/>"+"运算符会优先考虑字符串连接。如果一个操作符是字符串或者是转换为对象，那么另一个对象会转换为字符串，加法将进行字符串的连接操作。如果两个字符串都不是类字符串的，那么进行算术加法运算。
+	<div class="cdiv">
+		1+2 //==>3
+		"1"+2 //==>"12"
+		1+{} //==>"1[Object Object]"
+		true+true //==>2
+
+		2+null //==>2
+		2+undefined //==>NaN
+		
+		1+2+"haha" //==>"3haha"
+	</div>
+	</p>
+	<h4>一元运算符</h4>
+	<p>一元运算符作用于一个操作数，并返回一个新值。它具有很高的优先级，并且都是右结合的。例如++,--,+,-（注意+，-既是一元操作符，也是二元运算符）<br/>
+	<ul>
+		<li>+:把操作数转换为数字或NaN</li>
+		<li>-:把操作数转换为数字后符号取反。</li>
+		<li>++,--</li>
+	</ul>
+	</p>
+	<h4>位运算符</h4>
+	<p>与&,或|,异或^,非~,左移&lt;&lt;,右移>>,无符号右移>>>
+	</p>
+	<h3>关系表达式</h3>
+	<h4>相等和不等运算符</h4>
+	<p>相等==运算符运行进行类型转换后进行比较，但是恒等===运算符则是严格的进行比较。这里介绍一下==的比较规则:
+	<ul>
+		<li>null==undefined;//true</li>
+		<li>如果一个值是数字，另一个是字符串，先将字符串转为数字，然后使用转换的值进行比较</li>
+		<li>如果一个值是true或false，则先将其转为1或0比较。</li>
+		<li>如果一个值是对象，另一个值是数字或字符串，则将对象转换为原始值，然后再进行比较。</li>
+		<li>其他不同类型之间的比较均不相等。</li>
+	</ul>
+	例如:"1"==true;//true
+	</p>
+	<h4>比较运算符</h4>
+	<p>&lt;,&gt;,&lt;=,&gt;=,注意如果跟NaN比较，结果总位false。<br/>
+	对于"+"运算符，更偏向字符串，而比较运算符更偏向数字。例如:
+	<div class="cdiv"> 1+2 ==>3 <br/>
+	1+"2" ==>"12"<br/>
+	"11" &lt; 3 ==>false ,"11"-->11<br/>
+	"11" &lt; "3" ==> true,字符串直接比较<br/>
+	"one" &lt; 3 ==> false , "one"-->NaN</div>
+	</p>
+	<h4>in运算符</h4>
+	<p>如果右侧的对象拥有一个名为左侧操作数值的属性名，那么表达式返回true。
+	<div class="cdiv">
+		var point={ x:1,y:1 };
+		"x" in point; //true
+		"z" in point; //false;
+		var data=[5,3,2];
+		"0" in data;//true 包含索引0
+		1 in data //true 数字转换为字符串，包含索引1
+	</div>
+	</p>
+	<h4>instanceof运算符</h4>
+	<p>如果左侧的对象是右侧类的实例，返回true，否则返回false
+	<div class="cdiv">
+		var d = new Date();
+		d instanceof Date; //true
+		d instanceof Object //true
+		d instanceof Number //false
+		d instanceof String //false
+	</div>
+	</p>
+	<h3>逻辑表达式</h3>
+	<h4>逻辑与&&,逻辑或||,逻辑非!</h4>
+	<p>注意，逻辑与或非并不是总是返回布尔值，如:
+	<div class="cdiv">
+		var o={x:8};
+		o && o.x ==>8;
+	</div>
+	</p>
+	<h4>赋值操作符</h4>
+	<p>=,+=,-=,*=,/=,^=,&=,|=,>>=,&lt;&lt;=,>>>=;</p>
+	<h3>表达式计算</h3>
+	<h4>eval()</h4>
+	<p>eval()函数如果传入的参数不是字符串，它直接返回这个参数。如果参数是字符串，则把字符串当成JavaScript进行编译(parse),如果失败则抛出一个语法错误异常。<br/>关于eval最重要的是，它使用了调用它的变量作用域。
+	</p>
+	<h4>全局eval()</h4>
+	<h4>严格eval()</h4>
+	<p>严格模式将eval列为保留字，不能用一个别名覆盖eval()函数，而且变量名、函数名、函数参数或者异常捕获的参数都不能取名为eval</p>
+	<h3>其他运算符</h3>
+	<h4>条件运算符(?:)</h4>
+	<h4>typeof运算符</h4>
+	<p>typeof运算符是一元运算符，操作数可以是任何类型，返回的结果是操作数类型的字符串表示。<br/>
+	<div class="cdiv">
+		typeof undefined ==> "undefined"
+		typeof null ==> "object"
+		true / false ==> "boolean"
+		任意数字或NaN ==> "number"
+		任意字符串 ==> "string"
+		任意函数 ==> "function"
+		任意内置对象 ==> "object"
+	</div>
+	</p>
+	<h4>delete运算符</h4>
+	<p>delete是一元运算符，用来删除对象或者数组的
+	<div class="cdiv">
+		var o={x:12};
+		delete o.x;
+		console.log(o.x);//undefined
+	</div>
+	但是delete不能删除内置的对象和属性，通过var声明的变量，function定义的函数和参数同样也不能删除。
+	</p>
+	<h4>void运算符</h4>
+	<p>void运算符使用时操作数会正常计算，但是会忽略结果返回undefined，这个运算符最常用在URL--javascript:URL,例如javascript:void window.open();
+	</p>
+	<h4>逗号运算符(,)</h4>
+	<p>逗号运算符是二元运算符，它的操作数可以是任何类型,例如:
+	<br/>i=1,j=3,k=5;最后返回的计算结果是2.
 	</p>
 </body>
 </html>

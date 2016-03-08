@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+</head>
+<body>
+<script type="text/javascript">
+var var1=1+{};
+console.log(var1);
+var var2=true+true;
+console.log(var2);
+var var3=2+null;
+console.log(var3);
+var var4=2+undefined;
+console.log(var4);
+var str1=+"124";
+var res1=str1+123;
+console.log(res1);
+var op1=11;//1011
+var op2=5;//0101
+var res1=op1&op2;//1;
+console.log(op1+"&"+op2+"="+(op1&op2));
+console.log(op1+"|"+op2+"="+(op1|op2));
+console.log(op1+"^"+op2+"="+(op1^op2));
+console.log("~"+op1+"= "+(~op1));
+console.log(op1+"<<2= "+(op1<<2));
+console.log(op1+">>2= "+(op1>>2));
+console.log(op1+">>>3= "+(op1>>>3));
+var arr1=[7,8,9];
+console.log("0" in arr1);
+var o={x:2};
+console.log(o && o.x);
+var p= o||o.x||12;
+console.log(p);
+var delres=delete o.x;
+console.log(o.x);
+</script>
+</body>
+</html>
+
