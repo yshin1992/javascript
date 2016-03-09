@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>类型、值和变量</title>
+<style>
+code{background:gray;color:white;}
+h3{
+	counter-increment:chapter;
+	counter-reset:sec;
+}
+h4{
+	counter-increment:sec;
+}
+h3:before{
+	content:"5." counter(chapter) ". ";
+	margin-left:0.5em;
+}
+h4:before{
+	content:"5" counter(chapter) "." counter(sec) ". ";
+	margin-left:1em;
+}
+p{
+	margin-left:1em;
+}
+.cdiv{margin-left:1em;border:1px solid blue;}
+</style>
+</head>
+<body>
+	<h3>对象</h3>
+	<p>对象最常见的操作是创建，设置，查找，删除，检测和枚举它的属性。属性包括名字和值，除此之外，还有一些与之相关的值，称为属性特性。
+	<br/>
+	<ul>
+		<li>可写:表明是否可以设置该属性的值</li>
+		<li>可枚举：表明是否可以通过for/in循环返回该属性</li>
+		<li>可配置：表明是否可以修改或删除该属性。</li>
+	</ul>
+	除此之外，每个对象还包括三个相关的对象特性：
+	<ul>
+		<li>对象的原型：指向另外一个对象，本对象的属性继承自它的原型</li>
+		<li>对象的类是一个表示对象类型的字符串</li>
+		<li>对象的扩展标记：是否可以向该对象添加新属性</li>
+	</ul>
+	JavaScript的三类对象和两类属性：
+	<ul>
+		<li>内置对象：由EMCAScript规范定义的对象或类。例如日期，数组，函数和正则表达式。</li>
+		<li>宿主对象：由JavaScript解释器嵌套的宿主环境定义的</li>
+		<li>自定义对象是由运行中的JavaScript代码创建的对象</li>
+		<li>自有属性：直接在对象中定义的属性</li>
+		<li>继承属性：是在对象的原型对象中定义的属性</li>
+	</ul>
+	</p>
+	<h4>创建对象</h4>
+	<p>对象直接量：由若干个名/值对组成的映射表，名/值对中间用冒号分隔，名/值对之间用逗号分隔。整个映射表用花括号括起来。
+	<div class="cdiv">
+		var book={
+			"main title":"JavaScript",//属性名有空格，必须用字符串表示
+			"sub-title":"The Definitive Guide",//属性名有连字符，必须用字符串表示
+			"for" : "all audiences",//for是保留字，必须用字符串表示
+			author :{
+				firstname:"David", 
+				surname:"Flanagan"
+			}
+		};
+	</div>
+	</p>
+	<p>通过new创建对象：使用new运算符创建并初始化一个新对象。例如
+	<div class="cdiv">
+		var o=new Object();
+		var d=new Date();
+		var a=new Array();
+		var r=new RegExp("js");
+	</div>
+	</p>
+	<p>原型：所有对象（null除外）都可以通过Object.prototype获得原型对象的引用。同样，所有数组都有Array.prototype的原型，所有日期对象都有Date.prototype的原型</p>
+	<p>Object.create()：这个静态函数可以接收两个参数，第一个参数是对象的原型，第二个参数可选；
+	<div class="cdiv">
+		var o1=Object.create({x:1,y:2});
+		var o2=Object.create(null);//o2不继承任何属性和方法
+		var o3=Object.create(Object.prototype);//创建一个普通的空对象
+		//inherit()返回一个继承自原型对象p的属性的新对象
+		function inherit(p){
+			
+	</div>
+	</p>
+</body>
+</html>
