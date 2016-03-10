@@ -79,9 +79,90 @@ p{
 		var o2=Object.create(null);//o2不继承任何属性和方法
 		var o3=Object.create(Object.prototype);//创建一个普通的空对象
 		//inherit()返回一个继承自原型对象p的属性的新对象
-		function inherit(p){
-			
+		function inherit(p)
+		{
+			if(p==null)
+				throw TypeError();
+			if(Object.create)
+				return Object.create(p);
+			var t=typeof p;
+			if(t!=="object" && t!=="function")
+				throw TypeError();
+			function f(){};
+			f.prototype=p;
+			return new f();
+		}
 	</div>
 	</p>
+	<h4>属性的查询和设置</h4>
+	<p>属性的查询：使用点(.)或方括号([])来获取属性的值。<br/>
+	属性的设置：同查询一样。
+	<br/>属性的访问object["property"]看起来更像数组，这种数组就叫做关联数组，也叫做散列、映射或字典。如果我们要通过变量来设置属性，这时只能通过数组访问的形式，例如
+	<div class="cdiv">
+		var ppt="Name";
+		console.log(stu[ppt]);
+		//for/in循环列出对象的属性
+		for(var pro in person){
+			console.log(person[pro]);
+		}
+	</div>
+	</p>
+	<h4>继承</h4>
+	<p>JavaScript对象具有“自有属性”，也有一些属性是从原型对象继承而来的。
+	<br/>如果试图访问一个不存在的属性会出错，返回undefined。<br/>
+	<div class="cdiv">
+		var book={
+			name:"JavaScript权威指南"
+		};
+		var len=book&&book.name&&book.name.length;//比较简易的获取书名name长度的方法
+	</div>
+	在这些场景下，给对象O设置属性p会出错:
+	<ul>
+		<li>o的属性p是只读的：不能给只读属性重新赋值。</li>
+		<li>o中的属性p是继承属性，且它是只读的：不能通过同名自有属性覆盖同名继承属性</li>
+		<li>o中不存在自有属性p：o没有setter方法继承属性p。并且o的可扩展性是false。如果o中不存在p，而且没有setter方法可供调用，则p一定会添加至o中。但如果o不是扩展的，那么o中不能定义新属性</li>
+	</ul>
+	</p>
+	<h4>删除属性</h4>
+	<p>delete运算符可以删除对象的属性。delete只是断开属性和宿主对象的联系，而不会操作属性中的属性。
+	<br/>delete运算符只能删除自有属性，不能删除继承属性。</p>
+	<h4>检测属性</h4>
+	<p>可以通过in运算符，hasOwnProperty()和propertyIsEnumerable()方法来完成这个工作，甚至通过属性查询也可以。
+	<div class="cdiv">
+		var bool1="name" in book;
+		var bool2="subtitle" in book;
+		var bool3="toString" in book;//o继承了toString属性
+		console.log(bool1+","+bool2+","+bool3);
+		
+		bool1=book.hasOwnProperty("name");
+		bool2=book.hasOwnProperty("subtitle");
+		bool3=book.hasOwnProperty("toString");//false toString是继承过来的
+		console.log(bool1+","+bool2+","+bool3);
+		
+		bool1=book.propertyIsEnumerable("name");//
+		bool2=book.propertyIsEnumerable("toString");
+		console.log(bool1+","+bool2);
+	</div>
+	用!==也可以判定,例如:book.name!==undefined返回为true，但是这个应用范围有限制，例如book.name=undefined，这时再次调用!==返回为false，但是book是有这个属性的。此时用in更为合适。
+	</p>
+	<h4>枚举属性</h4>
+	<p>
+		<ul>
+			<li>for/in:可以枚举出所有的属性包括自有属性和继承属性。
+			当在某种情况下需要循环出自有的属性且不包括方法时，通常这么做
+			<div class="cdiv">
+				for(var pro in book){
+					if(!book.hasOwnProperty(pro))
+						continue;
+					if(typeof pro === "function")
+						continue;
+					console.log(book[pro]);
+				}
+			</div>
+			</li>
+		</ul>
+	</p>
+	<h4>属性getter和setter</h4>
+	<p>在EMCAScript5中属性值可以用getter和setter替代</p>
 </body>
 </html>

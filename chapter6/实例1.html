@@ -5,20 +5,8 @@
 <title>实例1</title>
 </head>
 <body>
+	<script src="util.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		function inherit(p)
-		{
-			if(p==null)
-				throw TypeError();
-			if(Object.create)
-				return Object.create(p);
-			var t=typeof p;
-			if(t!=="object" && t!=="function")
-				throw TypeError();
-			function f(){};
-			f.prototype=p;
-			return new f();
-		}
 		
 		var person={
 			"Name":"Default",
@@ -31,7 +19,55 @@
 		}
 		
 		console.log(student.stuNo+","+student.basic.Name);
+		student.Age=15;
+		console.log(student.Age);
+		console.log(person.Age);
 		
+		var book={
+			name:"JavaScript权威指南"
+		};
+		var len=book&&book.name&&book.name.length;
+		console.log(len);
+		
+		var bool1="name" in book;
+		var bool2="subtitle" in book;
+		var bool3="toString" in book;//o继承了toString属性
+		console.log(bool1+","+bool2+","+bool3);
+		
+		bool1=book.hasOwnProperty("name");
+		bool2=book.hasOwnProperty("subtitle");
+		bool3=book.hasOwnProperty("toString");//false toString是继承过来的
+		console.log(bool1+","+bool2+","+bool3);
+		
+		bool1=book.propertyIsEnumerable("name");//
+		bool2=book.propertyIsEnumerable("toString");
+		console.log(bool1+","+bool2);
+		
+		for(var pro in book){
+			if(!book.hasOwnProperty(pro))
+				continue;
+			if(typeof pro === "function")
+				continue;
+			console.log(book[pro]);
+		}
+		
+		var square={
+			x:1,
+			y:1,
+			set area(newvalue){this.x=this.y=Math.sqrt(newvalue);},
+			get area(){return this.x*this.y;},
+			//long是只读存储器属性，它只有getter方法
+			get long(){return 2*(this.x+this.y);}
+		}
+		var q=inherit(square);//创建一个继承getter和setter的新对象。
+		q.x=1,q.y=1;
+		console.log(q.area+","+q.long);
+		//设置area是允许的
+		q.area=4;
+		console.log(q.x+","+q.y+","+q.area+","+q.long);
+		//设置long是无效的
+		q.long=12;
+		console.log(q.x+","+q.y+","+q.area+","+q.long);
 		//134
 	</script>
 </body>
