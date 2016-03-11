@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>数组</title>
+<style>
+code{background:gray;color:white;}
+h3{
+	counter-increment:chapter;
+	counter-reset:sec;
+}
+h4{
+	counter-increment:sec;
+	counter-reset:episode;
+}
+h5{
+	counter-increment:episode
+}
+h3:before{
+	content:"7." counter(chapter) ". ";
+	margin-left:0.5em;
+}
+h4:before{
+	content:"7" counter(chapter) "." counter(sec) ". ";
+	margin-left:1em;
+}
+h5:before{
+	content:"7" counter(chapter) "." counter(sec) "." counter(episode) ". ";
+	margin-left:1em;
+}
+p{
+	margin-left:1em;
+}
+.cdiv{margin-left:1em;border:1px solid blue;}
+span.warn{color:red;font-style:italic;}
+</style>
+</head>
+<body>
+	<h3>数组</h3>
+	<p>数组是值的有序集合。
+	<ol>
+		<li>JavaScript数组是无类型的：数组元素可以是任意的，并且同一个数组的不同元素也可以是不同类型的。</li>
+		<li>JavaScript数组是动态的：会根据需要增加或减少。</li>
+		<li>JavaScript数组可以是稀疏的：数组的索引不一定连续的，他们之间可以有空缺</li>
+	</ol>
+	</p>
+	<h4>创建数组</h4>
+	<p>
+		<ul>
+			<li>使用直接量定义：
+			<div class="cdiv">
+				var empty=[];//创建一个空数组
+				var primes=[2,4,2];//创建3个数值的数组
+				var misc=[1.2,true,"aaa"];//创建3个不同类型值的数组
+				
+				var b=[[1,{x:1}],[2,{x:2}]];//它也可以包含对象或数组直接量
+				
+				var count = [1,,3]; //省略2个值(其值为undefined)
+			</div>
+			</li>
+			<li>使用构造函数Array()创建
+				<div class="cdiv">
+					var a=new Array();
+					var a2=new Array(10);//指定长度10
+					var a3=new Array(5,3,2,"test");//初始化值
+				</div>
+			</li>
+		</ul>
+	</p>
+	<h4>数组元素的读和写</h4>
+	<p>获取数组的值<code>array[index]</code>,获取数组的长度<code>array.length;</code>,数组的索引的有效范围是0~2<sup>32</sup>-2。
+	<br/>可以使用负数或非整数作来索引数组，但是这是数组就会被当成常规的对象来看待，索引会变为字符串。而正因为这种特性，数组不存在下标越界的错误。
+	<div class="cdiv">
+		a[-1.23]=true;//这将会创建一个名为"-1.23"的属性
+		a["11"]=0;//这是数组的第11个元素
+		a[1.000]=12;//和a[1]相等
+	</div>
+	</p>
+	<h4>稀疏数组</h4>
+	<p>稀疏数组的元素个数要小于数组的长度。另外，数组直接量中省略值时不会创建稀疏数组。省略的元素在数组中中是存在的，值为undefined。这和数组元素根本不存在是有一些微妙的区别的。可以用in操作符检测：
+	<div class="cdiv">
+		var a1=[,,,];//数组是[undefined,undefined,undefined]
+		var a2=new Array(3);//该数组根本没有元素
+		console.log(0 in a1);//false，a1在索引0处没有元素
+		console.log(0 in a2);//false，a2在索引0处没有元素
+	</div>
+	</p>
+	<h4>数组长度</h4>
+	<p>每个数组有一个length属性，操作length属性可以实现删除数组的效果。<code>array.length=0;</code>
+	这将删除整个数组。在EMCAScript中可以将length属性设置为只读的。
+	<div class="cdiv">
+		var int_arr=[1,2,3,4,5];
+		Object.defineProperty(int_arr,"length",{
+			writable:false
+		});
+		int_arr[int_arr.length]=12;//设置失败
+		console.log(int_arr);		
+	</div>
+	</p>
+	<h4>数组元素的添加和删除</h4>
+	<p>添加数组的方法：
+		<div class="cdiv">
+			var int_arr=[];
+			int_arr[0]=1;
+			int_arr.push(2);
+			int_arr.push("one","two","three");//一次添加多个元素
+			console.log(int_arr);
+		</div>
+	</p>
+	<p>删除数组元素同样可以是用delete运算符：
+	<div class="cdiv">
+		delete int_arr[1];//在索引1的位置不再有元素
+		console.log(1 in int_arr);//false
+		console.log(int_arr.length);//数组的长度并未改变
+	</div>
+	与push对应的还有pop方法，还有shift和unshift方法。
+	</p>
+	<h4>数组遍历</h4>
+	<p>
+		使用for循环
+		<div class="cdiv">
+			var o={x:1,y:2,z:0};
+			var keys = Object.keys(o);//返回一个数组，数组里是该obj可被枚举的所有属性
+			var values=[];
+			for(var i=0;i<keys.length;i++){
+				values[i]=o[keys[i]];
+			}
+			console.log(values);
+		</div>
+		以上代码可以进行优化
+		<div class="cdiv">
+			for(var i=0,lens=keys.length;i<lens;i++){
+				if(![o[keys[i]]) continue;//跳过undefined,null和不存在的元素
+				values[i]=o[keys[i]];
+			}
+		</div>
+		注意循环数组不太使用for/in来循环，因为他会有部分属性是继承自Object,或者添加到Array.prototype的。
+		<br/>EMCAScript5中定义了一些遍历数组的新方法，最常用的是forEach(),
+		<div class="cdiv">
+			values.forEach(function(x){//将每个元素传递给参数x
+				console.log(x);
+			});
+		</div>
+	</p>
+	<h4>多维数组</h4>
+	<p>JavaScript不支持真正的多维数组，但可以使用数组的数组来近似。</p>
+	<h4>数组方法</h4>
+	<p>
+		<h5>join():将数组中所有的元素都转化为字符串并连接在一起并返回。可以传入一个参数用于分隔符,默认使用逗号分隔</h5>
+		<div class="cdiv">
+			console.log(values.join());//1,2,0
+			console.log(values.join(" "));1 2 0
+		</div>
+		<h5>reverse():返回逆序的数组</h5>
+		<div class="cdiv">
+			console.log(values.reverse());//[0,2,1]
+		</div>
+		<h5>sort():返回排序后的数组</h5>
+		<div class="cdiv">
+			console.log(values.sort());//[0,1,2]
+		</div>
+		如果要使用自定义的排序方式，可以传入一个函数:
+		<div class="cdiv">
+		console.log(values.sort(function(a,b){
+			return b-a;
+		}));
+		</div>
+	</p>
+</body>
+</html>

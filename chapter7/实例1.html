@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>实例1</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var empty=[];//创建一个空数组
+		var primes=[2,4,2];//创建3个数值的数组
+		var misc=[1.2,true,"aaa"];//创建3个不同类型值的数组
+		
+		var b=[[1,{x:1}],[2,{x:2}]];//它也可以包含对象或数组直接量
+		
+		var count = [1,,3]; //省略2个值(其值为undefined)
+		
+		var a=new Array();
+		var a2=new Array(10);//指定长度10
+		var a3=new Array(5,3,2,"test");//初始化值
+		
+		a[-1.23]=true;//这将会创建一个名为"-1.23"的属性
+		a["11"]=0;//这是数组的第11个元素
+		a[1.000]=12;//和a[1]相等
+		
+		var a1=[,,,];//数组是[undefined,undefined,undefined]
+		var a2=new Array(3);//该数组根本没有元素
+		console.log(0 in a1);//true，a1在索引0处有一个元素
+		console.log(0 in a2);//false，a2在索引0处没有元素
+		
+		var int_arr=[1,2,3,4,5];
+		Object.defineProperty(int_arr,"length",{
+			writable:false
+		});
+		int_arr[int_arr.length]=12;//设置失败
+		console.log(int_arr);
+		
+		var int_arr=[];
+		int_arr[0]=1;
+		int_arr.push(2);
+		int_arr.push("one","two","three");//一次添加多个元素
+		console.log(int_arr);
+		
+		delete int_arr[1];//在索引1的位置不再有元素
+		console.log(1 in int_arr);//false
+		console.log(int_arr.length);//数组的长度并未改变
+		
+		var o={x:1,y:2,z:0};
+		var keys = Object.keys(o);//返回一个数组，数组里是该obj可被枚举的所有属性
+		var values=[];
+		for(var i=0;i<keys.length;i++)
+		{
+			values[i]=o[keys[i]];
+		}
+		console.log(values);
+		
+		values.forEach(function(x){//将每个元素传递给参数x
+			console.log(x);
+		});
+		
+		console.log(values.join());
+		console.log(values.join(" "));
+		
+		console.log(values.reverse());//[0,2,1]
+		
+		console.log(values.sort());//[0,1,2]
+		
+		console.log(values.sort(function(a,b){
+			return b-a;
+		}));
+		//134
+	</script>
+</body>
+</html>
