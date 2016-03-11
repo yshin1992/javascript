@@ -24,6 +24,7 @@ p{
 	margin-left:1em;
 }
 .cdiv{margin-left:1em;border:1px solid blue;}
+span.warn{color:red;font-style:italic;}
 </style>
 </head>
 <body>
@@ -32,7 +33,7 @@ p{
 	<br/>
 	<ul>
 		<li>可写:表明是否可以设置该属性的值</li>
-		<li>可枚举：表明是否可以通过for/in循环返回该属性</li>
+		<li>可枚举：表明是否可以通过<code>for/in</code>循环返回该属性</li>
 		<li>可配置：表明是否可以修改或删除该属性。</li>
 	</ul>
 	除此之外，每个对象还包括三个相关的对象特性：
@@ -72,7 +73,7 @@ p{
 		var r=new RegExp("js");
 	</div>
 	</p>
-	<p>原型：所有对象（null除外）都可以通过Object.prototype获得原型对象的引用。同样，所有数组都有Array.prototype的原型，所有日期对象都有Date.prototype的原型</p>
+	<p>原型：所有对象（null除外）都可以通过<code>Object.prototype</code>获得原型对象的引用。同样，所有数组都有Array.prototype的原型，所有日期对象都有Date.prototype的原型</p>
 	<p>Object.create()：这个静态函数可以接收两个参数，第一个参数是对象的原型，第二个参数可选；
 	<div class="cdiv">
 		var o1=Object.create({x:1,y:2});
@@ -127,7 +128,7 @@ p{
 	<p>delete运算符可以删除对象的属性。delete只是断开属性和宿主对象的联系，而不会操作属性中的属性。
 	<br/>delete运算符只能删除自有属性，不能删除继承属性。</p>
 	<h4>检测属性</h4>
-	<p>可以通过in运算符，hasOwnProperty()和propertyIsEnumerable()方法来完成这个工作，甚至通过属性查询也可以。
+	<p>可以通过<code>in</code>运算符，<code>hasOwnProperty()</code>和<code>propertyIsEnumerable()</code>方法来完成这个工作，甚至通过属性查询也可以。
 	<div class="cdiv">
 		var bool1="name" in book;
 		var bool2="subtitle" in book;
@@ -143,7 +144,7 @@ p{
 		bool2=book.propertyIsEnumerable("toString");
 		console.log(bool1+","+bool2);
 	</div>
-	用!==也可以判定,例如:book.name!==undefined返回为true，但是这个应用范围有限制，例如book.name=undefined，这时再次调用!==返回为false，但是book是有这个属性的。此时用in更为合适。
+	用!==也可以判定,例如:book.name!==undefined返回为true，但是这个应用范围有限制，例如给book.name赋值undefined，这时再次调用!==返回为false，但是book是有这个属性的。此时用in更为合适。
 	</p>
 	<h4>枚举属性</h4>
 	<p>
@@ -163,6 +164,105 @@ p{
 		</ul>
 	</p>
 	<h4>属性getter和setter</h4>
-	<p>在EMCAScript5中属性值可以用getter和setter替代</p>
+	<p>在EMCAScript5中属性值可以用getter和setter替代，使用getter和setter意味着这个属性具有可读或可写的特性。它的用法如下所示:
+	<div class="cdiv">
+		var o={
+			data_prop:value,//普通属性
+			
+			get accessor_prop(){return value;},//可读
+			set accessor_prop(newValue){//TODO}//可写
+		}
+	</div>
+	注意如果只有getter无setter意味着这个属性只读，不能写；同样若只有setter无getter，意味着只写，不可读。
+	</p>
+	<h4>属性的特性</h4>
+	<p>属性除了包含名字和值，它还有一些用于标识可写，可配置和可枚举的特性。<br/>数据属性的4个特性是值(value)、可写性(writable)、可配置性(configurable)和可枚举性(enumerable)。<br/>
+	存取器属性具有读取(get)，写入(set)，可枚举性和可配置性。</p>
+	<p>通过<code>Object.getOwnPropertyDescriptor()</code>可以获得某个特定属性的属性描述符。
+	<div class="cdiv">
+		var obj={};
+		Object.defineProperty(obj,"x",{
+			value:1,writable:true,configurable:true,enumerable:false
+		});
+		console.log(obj.x);//可读 -->1
+		console.log(keys(obj));//不可枚举-->[]
+		Object.defineProperty(o,"x",{
+			writable:false
+		});
+		o.x=12;//操作失败，但不报错
+	</div>
+	注意，这个方法不能修改继承的属性。如果要同时创建或修改多个属性，则需使用<code>Object.defineProperties()</code>，示例:
+	<div class="cdiv">
+		var obj2=Object.defineProperties({},{
+			x:{value:1,writable:false},
+			y:{value:13,configurable:true},
+			r:{
+				get :function(){return this.x*this.y},
+				configurable:false
+			}
+		});
+		console.log(obj2.x+","+obj2.y+","+obj2.r);
+	</div>
+	</p>
+	<p>对于Object.defineProperty()或Object.defineProperties()有如下的规则:
+	<ul>
+		<li>如果对象是不可扩展的，则可以编辑已有的自有属性，但是不能添加新的属性</li>
+		<li>如果属性是不可配置的，则不能修改它的可配置性和可枚举性。</li>
+		<li>如果存取器属性是不可配置的，则不能修改它的getter和setter方法，也不能将它转换为数据属性</li>
+		<li>如果数据属性是不可配置的，则不能将它转换为存取器属性，不能将它的可写性从false改为true，但可以从true改为false</li>
+		<li>如果数据属性是不可配置且不可写的，则不能修改它的值。</li>
+	</ul>
+	</p>
+	<h4>对象的三个属性</h4>
+	<p>每个对象都有与之相关的原型(prototype)、类(class)和可扩展性(extensiable attribute)<br/>
+		<h5>原型属性</h5>
+		<p>在EMCAScript5中通过将对象作为<code>Object.getPrototypeOf()</code>可以查询它的原型。在EMCAScript3中则通过o.constructor.prototype来检测一个对象的原型。</p>
+		<h5>类属性</h5>
+		<p>对象的类属性是一个字符串，用以表示对象的类型信息。目前只有一种间接的方法可以查询它，默认的toString()方法返回了这种格式的字符串：[Object class]。但是目前很多对象重写了toString()方法，必须间接的调用Function.call()方法。
+		<div class="cdiv">
+			function classof(o){
+				if(o === null) return "Null";
+				if(o === undefined) return "Undefined";
+				return Object.prototype.toString.call(o).slice(8,-1);
+			}
+			console.log(classof(o)+","+classof(1)+","+classof("haha")+","+classof(false)+","+classof(/\w/g)+","+classof([]));
+		</div>
+		</p>
+		<h5>可扩展性</h5>
+		<p>对象的可扩展性用以表示是否可以给新对象添加新属性。所有内置对象和自定义对象都是显式可扩展的。
+		宿主对象的可扩展性是由JavaScript引擎定义的。
+		<br/>EMCAScript5通过将对象传入<code>Object.isExtensible()</code>，来判断该对象是否是可扩展的。如果想阻止对象进行扩展，需要调用Object.preventExtensions()。<span class="warn">注意：一旦将对象转换为不可扩展的，就无法再将其转换为可扩展的了。</span>
+		<br/>
+		Obejct.seal()的功能与Object.preventExtensions()类似，但是除了将对象设置为不可扩展之外，还可以将对象的所有属性都设置为不可配置的。也就是说既不能添加新属性，而且它已有的属性也不能删除和配置，不过它已有的可写属性依然可以设置。对于已经封闭的对象是不能解封的，可以用isSealed()来检测对象是否封闭。
+		<br/>Object.freeze()将更严格的锁定对象--冻结(frozen)。它比seal()更严格，它还将所有的数据属性置为只读的。同样，利用Object.isFrozen()来检测对象是否冻结。
+		<div class="cdiv">
+			//创建一个封闭对象，包括一个冻结原型和一个不可枚举的属性
+			var o2=Object.seal(Object.create(Object.freeze({x:1}),{
+				y:{value:2,writable:false}
+			}));		
+		</div>
+		</p>
+	</p>
+	<h3>序列化对象</h3>
+	<p>对象序列化是指将对象的状态转换为字符串，也可将字符串还原为对象。EMCAScript5提供了JSON.stringify()和JSON.parse()来实现这两个功能。
+	<div class="cdiv">
+		o2={x:1,y:[1,2,null,12]};
+		var str_o2=JSON.stringify(o2);
+		console.log(str_o2);
+		var obj_o2=JSON.parse(str_o2);
+		console.log(obj_o2);		
+	</div>
+	</p>
+	<h4>对象方法</h4>
+	<p>
+		<h5>toString()方法</h5>
+		<p>toString()方法没有参数，它将会返回一个表示调用这个方法的对象值的字符串。在需要将对象转换为字符串的时候，JavaScript会调用这个方法。</p>
+		<h5>toLocaleString()方法</h5>
+		<p>除了基本的toString()方法外，对象都包含toLocaleString()方法，这个方法返回一个表示这个对象的本地化字符串。Object中默认的toLocaleString()方法返回的就是toString()的内容，Date类和Number类对toLocaleString()方法做了定制，可以对数字、日期和时间做本地化的转换。</p>
+		<h5>toJSON()方法</h5>
+		<p>Object.prototype实际上没有定义toJSON()方法，但对于需要执序列化的对象来说，JSON.stringify()方法会调用toJSON()方法。</p>
+		<h5>valueOf()方法</h5>
+		<p>valueOf()方法和toString()方法非常类似，但往往当JavaScript需要将对象转换为某种原始值而非字符串的时候才会调用它，尤其是转换为数字的时候。</p>
+	</p>
 </body>
 </html>

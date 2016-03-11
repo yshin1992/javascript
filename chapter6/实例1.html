@@ -68,6 +68,64 @@
 		//设置long是无效的
 		q.long=12;
 		console.log(q.x+","+q.y+","+q.area+","+q.long);
+		
+		console.log(Object.getOwnPropertyDescriptor({x:1},"x"));
+		var obj={};
+		Object.defineProperty(obj,"x",{
+			value:1,writable:true,configurable:true,enumerable:false
+		});
+		console.log(obj.x);//可读 -->1
+		console.log(keys(obj));//不可枚举-->[]
+		Object.defineProperty(obj,"x",{
+			writable:false
+		});
+		obj.x=12;//操作失败，但不报错
+		
+		var obj2=Object.defineProperties({},{
+			x:{value:1,writable:false,configurable:false},
+			y:{value:13,configurable:true},
+			r:{
+				get :function(){return this.x*this.y},
+				configurable:false
+			}
+		});
+		console.log(obj2.x+","+obj2.y+","+obj2.r);
+//		Object.defineProperty(obj2,"x",{configurable:true,writable:true});//TypeError: can't redefine non-configurable property "x"
+//		obj2.x=122;
+//		console.log(obj2.x);
+		console.log(Object.getPrototypeOf(obj2));
+		
+		var point={x:10,y:5};
+		var o=Object.create(point);//创建
+		console.log(point.isPrototypeOf(o));
+		console.log(Object.prototype.isPrototypeOf(o));
+		
+		console.log(classof(o)+","+classof(1)+","+classof("haha")+","+classof(false)+","+classof(/\w/g)+","+classof([]));
+		
+		console.log(Object.isExtensible(point));
+		//设置对象是不可扩展的
+		Object.preventExtensions(point);
+		console.log(Object.isExtensible(point));
+		var delres=delete point.y;//删除原有的y属性
+		point.z=12;//新增z失败
+		o.z=13; //新增成功
+		console.log(delres+"\t"+point.z+"\t"+point.y+"\t"+o.z);//point.z属性并未添加成功undefined
+		
+		//创建一个封闭对象，包括一个冻结原型和一个不可枚举的属性
+		var o2=Object.seal(Object.create(Object.freeze({x:1}),{
+			y:{value:2,writable:false}
+		}));
+		
+		o2={x:1,y:[1,2,null,12]};
+		var str_o2=JSON.stringify(o2);
+		console.log(str_o2);
+		var obj_o2=JSON.parse(str_o2);
+		console.log(obj_o2);
+		
+		var a=o2+12;
+		console.log(a);
+		
+		
 		//134
 	</script>
 </body>

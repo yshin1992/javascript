@@ -97,3 +97,62 @@ function inherit(p){
     f.prototype = p;
     return new f();
 }
+
+/**
+ * 对象的属性$n是只读的
+ * 并且只增不减
+ */
+var serialNumber={
+	$n:0,
+	set n(next){
+		if(this.$n<next)
+			this.$n=next;
+		else
+			throw "序列号不能比当前值小";
+	},
+	get n(){
+		return this.$n++;
+	}
+} 
+
+var random={
+	get oct(){return Math.random()*256;},
+	get uint16(){return Math.random()*65535;},
+	get int16(){return (Math.random()*65535)-32768;}
+}
+
+/**
+ * 给Object添加一个不可枚举的extend方法
+ * 这个方法继承自调用它的对象，将作为参数传入的对象的属性进行一一复制
+ * 除了值之外，也复制属性的所有属性，除非包括了同名属性。
+ */
+Object.defineProperty(Object.prototype,"extend",{
+	writable:true,
+	enumerable:false,
+	configurable:true,
+	value:function(o){
+		//得到所有的自有属性，包括不可枚举属性
+		var names=Object.getOwnPropertyNames(o);
+		for(var i=0;i<names.length;i++){
+			if(names[i] in this)
+				continue;
+			var desc=Object.getOwnPropertyDescriptor(o,names[i]);
+			//用desc给this创建一个新属性
+			Object.defineProperty(this,names[i],desc);
+		}
+	}
+});
+
+/**
+ * classof()函数
+ * @param {Object} o
+ */
+function classof(o){
+	if(o === null) return "Null";
+	if(o === undefined) return "Undefined";
+	return Object.prototype.toString.call(o).slice(8,-1);
+}
+
+
+
+
