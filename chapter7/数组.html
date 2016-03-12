@@ -122,14 +122,14 @@ span.warn{color:red;font-style:italic;}
 			var o={x:1,y:2,z:0};
 			var keys = Object.keys(o);//返回一个数组，数组里是该obj可被枚举的所有属性
 			var values=[];
-			for(var i=0;i<keys.length;i++){
+			for(var i=0;i&lt;keys.length;i++){
 				values[i]=o[keys[i]];
 			}
 			console.log(values);
 		</div>
 		以上代码可以进行优化
 		<div class="cdiv">
-			for(var i=0,lens=keys.length;i<lens;i++){
+			for(var i=0,lens=keys.length;i&lt;lens;i++){
 				if(![o[keys[i]]) continue;//跳过undefined,null和不存在的元素
 				values[i]=o[keys[i]];
 			}
@@ -165,6 +165,130 @@ span.warn{color:red;font-style:italic;}
 			return b-a;
 		}));
 		</div>
+		<h5>concat():创建并返回一个新数组，数组包括调用它的数组的所有元素和concat的每个参数</h5>
+		<div class="cdiv">
+			console.log(a.concat(4,5));//[1,2,3,4,5]
+			console.log(a.concat([4,5]));//[1,2,3,4,5]
+			console.log(a.concat([4,5],[6,7]));//[1,2,3,4,5,6,7]
+			console.log(a.concat(4,[5,[6,7]],8));//[1,2,3,4,5,[6,7],8
+		</div>		
+		<h5>slice()返回指定数组的一个片段或子数组。</h5>
+		<p>它的两个参数分别指定了子数组开始和结束的位置。如果未指定数组结束的位置，则默认结束位置是数组的末尾。如果参数出现了负数，意味着数组的倒数第几个元素。
+		<div class="cdiv">
+		var a2=a.concat(5,4,6);
+		console.log(a2.slice(-2));//[4,6]
+		console.log(a2.slice(-2,3));//[]
+		console.log(a2.slice(2,-1));//[3,5,4]
+		</div>
+		<h5>splice():在数组中插入或删除元素。</h5>
+		<p>不同于slice()或concat()，它会修改调用的数组。splice()的第一个参数指定了插入或删除的起始位置，第二个参数指定了删除的元素个数。如果省略第二个参数，则会从指定位置删除至末尾。splice()方法返回被删除元素组成的数组。第三个及其以后的参数，指定了插入到数组的元素。
+		<div class="cdiv">
+		var a3=a2.splice(1,2,'a','b');
+		console.log(a3);//[2,3]
+		console.log(a2);//[1,'a','b',5,4,6];
+		</div>
+		</p>
+		<h5>push()和pop():允许将数组当做栈来使用</h5>
+		<p>push()方法在数组的尾部添加一个或多个元素，并返回数组的新长度。pop()方法则相反：它删除最后一个元素，减小数组的长度，并返回被删除的值。
+		<div class="cdiv">
+		var new_lens=a2.push([1,2,3]);//7
+		console.log(new_lens);
+		var pop_element=a2.pop();
+		console.log(pop_element);//[1,2,3]
+		</div>
+		</p>
+		<h5>shift()和unshift()：删除数组的第一个元素并返回，在数组的头部添加一个元素并返回新数组的长度。</h5>
+		<h5>toString()和toLocaleString()</h5>
+	<h4>EMCAScript5中的数组方法</h4>
+	<p>EMCAScript 5中定义了9个新的数组方法来遍历、映射、过滤、简化和搜索数组。</p>
+	<h5>forEach()</h5>
+	<p>forEach包含三个参数：数组元素，索引，数组本身。
+	<div class="cdiv">
+		var a4=a.concat(4,[5,[6,7]],8);
+		a4.forEach(function(elem,index,arr){
+				arr[index]=++elem;
+				});
+		console.log(a4);//[2,3,4,5,NaN,9]
+	</div>
 	</p>
-</body>
+	<h5>map()方法：将调用的数组的每个元素传给指定的函数，返回一个数组，它包含该数组的返回值。它不会修改原始数组。</h5>
+	<div class="cdiv">
+	var a5=a4.map(function(elem){return Math.pow(elem,2);});
+	</div>
+	<h5>filter()</h5>
+	<p>filter()方法返回的数组元素是调用的数组的一个子集。传递的函数是用来逻辑判定的：该函数返回true或false。
+	<div class="cdiv">
+		var filter_arr=a5.filter(function(elem){
+				return elem>25;
+				});
+	</div>
+	注意，filter函数会跳过稀疏数组中缺少的元素，它返回的总是稠密的数组。
+	</p>
+	<h5>every()和some()</h5>
+	<p>every()和some()方法是数组的逻辑判定：它们对数组元素应用指定的函数进行判定，返回true或false。
+	<br/>every()方法：当且仅当针对数组中的所有元素调用判定函数都返回true，它才返回true.
+	<br/>some()函数：当数组中至少有一个元素调用判定函数返回true，它就返回true。
+	<div class="cdiv">
+		var bool_every=a5.every(function(elem){
+				return elem>25;
+				});
+		var bool_some=a5.some(function(elem){
+				return elem>25;
+				});
+		console.log(bool_every+"\t"+bool_some);//false true
+	</div>
+	</p>
+	<h5>reduce()和reduceRight()方法</h5>
+	<p>reduce()和reduceRight()方法使用指定的函数对数组元素进行组合，并返回单个值。它有两个参数，第一个参数是执行简化操作的函数。第二个参数是传递给函数的初始值。
+	<div class="cdiv">
+		var value1_reduce=a5.reduce(function(x,y){
+				return x+y;},0);//数组所有元素和
+		var value2_reduce=a5.reduce(function(x,y){
+				return x*y;},1);//数组所有元素乘积
+		var value3_reduce=a5.reduce(function(x,y){
+				return x>y?x:y;});//返回数组最大值
+	</div>
+	如果没有指定函数的初始值，则默认使用数组的第一个元素作为初始值，此时，函数里将会使用数组的第一个元素和第二个元素作为参数。<br/>
+	对于空数组，如果未指定初始值，则会导致类型错误异常。如果调用reduce函数时只有一个值（数组只有一个元素没有初始值，或空数组有一个初始值），它会返回那个值而不会调用简化函数。
+	<br/>reduceRight()的工作原理同reduce()一样，不同的是它按照数组索引从高到低。
+	</p>
+	<h5>indexOf()和lastIndexOf()</h5>
+	<p>搜索整个数组中具有指定元素的索引，返回该索引或-1。indexOf()从头至尾搜索，lastIndexOf()则相反。
+	<div class="cdiv">
+		var arr=[0,1,2,1,-1];
+		var _index_of=arr.indexOf(1);//1
+		var _last_index_of=arr.lastIndexOf(1);//3;
+		var _index_not_found = arr.indexOf(4);//-1;
+	</div>
+	它可以有第二个参数，它指定从哪开始索引，如果该参数为负数，它代表相对于末尾的偏移量:
+	<div class="cdiv">
+		var in1=arr.indexOf(1,1);//1;
+		var in2=arr.indexOf(1,-1);//-1;
+	</div>
+	</p>
+	<h5>数组类型</h5>
+	<p>EMCAScript 5中区分是不是数组使用Array.isArray()。以前通常使用instanceof运算符判定。</p>
+	<h5>类数组对象</h5>
+	<p>JavaScript中的数组具有一些其他对象所不具有的特性:
+	<ul>
+		<li>当有新元素添加到数组中时，自动更新length；</li>
+		<li>设置length为一个较小值时将截断数组</li>
+		<li>从Array.prototype中继承一些有用的方法</li>
+		<li>其类属性为Array</li>
+	</ul>
+	对于类数组对象虽然不能在它们之上直接调用数组方法或期望length属性有什么特殊行为，但是任然可以针对真正数组遍历的代码来遍历它们。
+	<br/>在客户端JavaScript中，一些DOM方法也返回类数组对象。
+	<br/>类数组对象没有继承自Array.prototype,就不能在它们上面直接调用数组方法。但是可以间接的使用Function.call方法调用
+	<div class="cdiv">
+		 var str_arr_like_call = Array.prototype.join.call(a,"+");
+                 console.log(str_arr_like_call);//+b+
+                 console.log(Array.slice(a,0));//这个写法只在FireFox中支持
+	 </div>
+	 </p>
+	 <h5>作为数组的字符串</h5>
+	 <p>在EMCAScript 5中，字符串的行为类似于只读的数组。除了使用charAt()来访问单个字符外，还可以使用方括号:string[index];
+	 <br/>字符串是不可变值，故当把它们当做数组看待时，它们是只读的，如push()、reverse()和splice()等数组方法会修改数组，它们在字符串上的操作是无效的。
+	 </p>
+
+	</body>
 </html>

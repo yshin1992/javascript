@@ -5,6 +5,7 @@
 <title>实例1</title>
 </head>
 <body>
+	<script src="util.js"></script>
 	<script type="text/javascript">
 		var empty=[];//创建一个空数组
 		var primes=[2,4,2];//创建3个数值的数组
@@ -67,7 +68,87 @@
 		console.log(values.sort(function(a,b){
 			return b-a;
 		}));
-		//134
+		
+		var a=[1,2,3];
+		console.log(a.concat(4,5));//[1,2,3,4,5]
+		console.log(a.concat([4,5]));//[1,2,3,4,5]
+		console.log(a.concat([4,5],[6,7]));//[1,2,3,4,5,6,7]
+		console.log(a.concat(4,[5,[6,7]],8));//[1,2,3,4,5,[6,7],8
+		var a2=a.concat(5,4,6);
+		console.log(a2.slice(-2));//[4,6]
+		console.log(a2.slice(-2,3));//[]
+		console.log(a2.slice(2,-1));//[3,5,4]
+		
+		var a3=a2.splice(1,2,'a','b');
+		console.log(a3);//[2,3]
+		console.log(a2);//[1,'a','b',5,4,6];
+		
+		var new_lens=a2.push([1,2,3]);//7
+		console.log(new_lens);
+		var pop_element=a2.pop();
+		console.log(pop_element);//[1,2,3]
+
+		var a4=a.concat(4,[5,[6,7]],8);
+		a4.forEach(function(elem,index,arr){
+				arr[index]=++elem;
+				});
+		console.log(a4);
+		
+		a4.forEach(function(elem,index,arr){
+				if(isNaN(elem)){
+					arr.splice(index,1);
+				}
+			});
+		console.log(a4);
+		var a5=a4.map(function(elem){return Math.pow(elem,2);});
+		console.log(a5);
+		var filter_arr=a5.filter(function(elem){
+				return elem>25;
+				});
+		console.log(filter_arr);
+
+		var bool_every=a5.every(function(elem){
+				return elem>25;
+				});
+		var bool_some=a5.some(function(elem){
+				return elem>25;
+				});
+		console.log(bool_every+"\t"+bool_some);
+
+		var value1_reduce=a5.reduce(function(x,y){
+				return x+y;},0);//数组所有元素和
+		var value2_reduce=a5.reduce(function(x,y){
+				return x*y;},1);//数组所有元素乘积
+		var value3_reduce=a5.reduce(function(x,y){
+				return x>y?x:y;});//返回数组最大值
+		console.log(value1_reduce+"\t"+value2_reduce+"\t"+value3_reduce);
+		var val4_reduce=[].reduce(function(x,y){
+				return x*y;},1);
+		var val5_reduce=[10].reduce(function(x,y){
+				return 0;});
+		console.log(val4_reduce+"\t"+val5_reduce);
+
+		var arr=[0,1,2,1,-1];
+		var _index_of=arr.indexOf(1);//1
+		var _last_index_of=arr.lastIndexOf(1);//3;
+		var _index_not_found = arr.indexOf(4);//-1;
+		console.log(_index_of+"\t"+_last_index_of+"\t"+_index_not_found);
+		var in1=arr.indexOf(1,1);//1;
+		console.log(in1);
+		var in2=arr.indexOf(1,-1);//-1;
+		console.log(in2);
+		console.log(arr instanceof Array);
+		console.log(arr instanceof Object);
+		console.log(typeof arr);
+		console.log(Array.prototype.isPrototypeOf(arr));
+
+		console.log(findAll(arr,1));
+		console.log(Object.prototype.toString.call(arr));
+
+		var a={"o":"a","1":"b",length:3};
+		var str_arr_like_call = Array.prototype.join.call(a,"+");
+		console.log(str_arr_like_call);
+		console.log(Array.slice(a,0));//这个写法只在FireFox中支持
 	</script>
 </body>
 </html>
