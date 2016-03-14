@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>数组</title>
+<style type="text/css">
+code{background:gray;color:white;}
+h3{
+	counter-increment:chapter;
+	counter-reset:sec;
+}
+h4{
+	counter-increment:sec;
+	counter-reset:episode;
+}
+h5{
+	counter-increment:episode
+}
+h3:before{
+	content:"8." counter(chapter) ". ";
+	margin-left:0.5em;
+}
+h4:before{
+	content:"8." counter(chapter) "." counter(sec) ". ";
+	margin-left:1em;
+}
+h5:before{
+	content:"8." counter(chapter) "." counter(sec) "." counter(episode) ". ";
+	margin-left:1em;
+}
+p{
+	margin-left:1em;
+}
+.cdiv{margin-left:1em;border:1px solid blue;}
+span.warn{color:red;font-style:italic;}
+</style>
+</head>
+<body>
+	<h3>函数</h3>
+	<h4>函数定义</h4>
+	<p>函数使用关键字function来定义。函数定义是从function关键字开始，后跟函数名标识符，一对圆括号和一对花括号。
+		<br/>函数声明可以出现在全局代码里或者内嵌在其它函数里，但是不能出现在循环、判断条件，或者try/catch/finally及with语句里。
+	</p>
+	<h4>函数调用</h4>
+	<p>函数调用有4种方式:作为函数、作为方法、作为构造函数、通过它们的call()或apply()方法间接调用</p>
+	<h5>函数调用</h5>
+	<div class="cdiv">
+		var total=distance(0,0,2,1)+distance(1,2,2,0);
+	</div>
+	<h5>方法调用</h5>
+	<p>即调用对象里的JavaScript函数
+	<div class="cdiv">
+		var o={x:1,y:1};
+		o.z=function(){return this.x+this.y};
+	</div>
+	</p>
+	<h5>构造函数调用</h5>
+	<p>如果函数或方法调用之前带有关键字new,它就构成构造函数调用。
+	<br/>凡是没有形参的构造函数调用都可以省略圆括号：
+	<div class="cdiv">
+		var o=new Object(); <==>var o =new Object;
+	</div>
+	注意构造函数调用会创建一个新的空对象，这个对象继承自构造函数的prototype属性，构造函数试图初始化这个新创建的对象，并将这个对象作为其调用上下文。
+	</p>
+	<h5>间接调用</h5>
+	<p>JavaScript中使用call()和apply()方法可以间接的调用函数。</p>
+	<h4>函数的实参和形参</h4>
+	<p>JavaScript中的函数定义并未指定函数形参的类型，函数调用也未对传入的实参值做任何的类型检查。</p>
+	<h5>可选形参</h5>
+	<p>当调用函数的时候传入的实参比函数声明时指定的形参个数要少，剩下的形参都会设置为undefined。但是我们可以给省略的参数设置一个合理的初始值。例如:
+	<div class="cdiv">
+		function getPropName(o,/** optional */ a){
+		//	if(a === undefined) a=[];
+			a=a||[];//这种方法更好
+			for(var prop in o){
+				if(!o.hasOwnProperty(prop)) continue;
+				if(typeof o[prop] === "function") continue;
+				a.push(prop);
+			}
+			return a;
+		}
+	</div>
+	</p>
+	<h5>可变长的实参列表：实参对象</h5>
+	<p>JavaScript中在函数定义时是可以将参数列表省略的，在函数内部可以用arguments来指向实参对象的引用。
+	<div class="cdiv">
+		function max(){
+			var max=Number.NEGATIVE_INFINITY;
+			for (var i = 0, len = arguments.length; i < len; i++) {
+				if (arguments[i] > max) 
+					max = arguments[i];
+			}
+			return max;
+		}
+		console.log(max(1,23,4,5,19));
+	</div>
+	注意arguments可以看出是形参的不同命名:
+	<div class="cdiv">
+		function f(x){
+			console.log(x);
+			arguments[0]=null;
+			console.log(x);//null
+	</div>
+	</p>
+	<h5>callee和caller属性</h5>
+	<p>在EMCAScript中规定callee代表正则执行的函数。caller是非标准的，代表正在执行的函数的函数，利用它可以访问调用栈。利用callee可以递归的调用自身。
+	<div class="cdiv">
+		var factorial = function(x){
+			if(x<=1) return 1;
+			return x*arguments.callee(x-1);
+	</div>
+	</p>
+	<h4>将对象属性用作实参</h4>
+	<p>有时候利用对象作为参数可能会更加方便,例如:
+	function arraycopy(from,from_start,to,to_start,length){
+		if(!Array.isArray(from) || !Array.isArray(to))
+			throw "参数错误";
+		for(var i=from_start,j=to_start;i<from_start+length;i++,j++){
+			to[j]=from[i];
+		}
+	}
+	function easycopy(args){
+		arraycopy(args.from,
+						args.from_start||0,
+						args.to,
+						args.to_start||0,
+						args.length);
+	}
+	</p>
+	<h5>实参类型</h5>
+	<p>JavaScript的方法的形参并未声明类型，在形参传入函数体之前也未做任何类型检查。</p>
+	<h4>作为值的函数</h4>
+	<p>JavaScript中可以将函数赋值给变量，存储在对象的属性或数组的元素中，作为参数传入另外一个函数等。
+	<div class="cdiv">
+		function square(x){return x*x};
+		var s=square;//将函数赋值给变量
+		console.log(s(3));
+		
+		var o={square:function(x){return x*x;}};//将函数赋值给对象的属性
+		console.log(o.square(4));
+		
+		var arr=[function(x){return x*x;},12,34];//将函数赋值给数组元素
+		console.log(arr[0](5));//25
+	</div>
+	</p>
+	<h4>自定义函数属性</h4>
+	<p>JavaScript中的函数并不是一个原始值，而是一种特殊的对象。也就是说，函数可以拥有属性。</p>
+	<h4>作为命名空间的函数</h4>
+	<p>在函数中定义的变量在函数体内是可见的，在函数外部是不可见的。
+	<div class="cdiv">
+		function mymodule(){
+		//模块代码
+		//这个模块所使用的所有变量都是局部变量
+		//而不是污染全局命名空间
+		}
+		mymodule();//不要忘了调用这个函数来创建变量
+	</div>
+	上面这段代码还可以使用匿名函数来定义:
+	<div class="cdiv">
+		(function(){ //mymodule()函数重新为匿名函数
+		//模块代码
+		}()); //结束函数定义时立即调用
+	</div>
+	注意function之前的左圆括号是必须的，如果缺少这个左圆括号的话，JavaScript解释器会试图将关键字function解释为函数声明语句。
+	</p>
+	<h4>闭包</h4>
+	<p>闭包的简单实例:
+	<div class="cdiv">
+		//闭包版本的uniqueInteger
+		var uniqueNum =(function (){
+			var counter=0;
+			return function(){
+				return counter++;
+			}
+		}());//立即执行初始化
+		var b=uniqueNum;
+		console.log(b()+","+b()+","+b()+","+b());
+	</div>
+	闭包的强大特性：它们可以捕捉到局部变量和参数，并一直保存下来。
+	<br/>像counter一样的私有变量不是只能用在一个单独的闭包中，在同一个外部函数内定义的多个嵌套函数也可以访问它，这多个嵌套函数都共享一个作用域链:
+	<div class="cdiv">
+		function counter(){
+			var n=0;
+			return {
+				count:function(){return n++;},
+				reset:function(){ n =0 ;}
+			};
+		}
+		var c=counter(),d=counter();//创建两个计数器
+		c.count();d.count();
+	</div>
+	下面是使用嵌套函数为对象添加私有方法的实例：
+	<div class="cdiv">
+		function addPrivateProperty(o,name,predicate){
+			var value;//这是一个属性值
+			
+			//getter方法简单的将其返回
+			o["get"+name]=function(){return value;};
+			
+			//setter方法首先检查值是否合法，若不合法就抛出异常
+			o["set"+name]=function(v){
+				if(predicate && !predicate(v))
+					throw Error("set " +name+" : invalid value "+v );
+				else
+					value=v;
+			};
+		}
+		var obj = {};
+		addPrivateProperty(obj,"Name",function(x){return typeof x=="string";});
+		obj.setName("Frank");
+		console.log(obj.getName());
+	</div>
+	注意，不要试图将循环代码移入定义这个闭包的函数之内：
+	<div class="cdiv">
+		function constfuncs(){
+			var funcs=[];
+			for(var i=0;i<10;i++){
+				funcs[i]=function(){return i;}
+			}
+			return funcs;
+		}
+		var funcs = constfuncs();
+		console.log(funcs[5]());//这里值为10
+	</div>
+	这里返回的是共享变量i，<code>return i;</code>,实际上此时数组中的每个值都是10。<br/>
+	另外，要注意的是this是关键字，不是变量。如果要在外部函数内使用this的话，需要将this保存在一个变量中，
+	<code>var self =this;</code>
+	</p>
+	<h4>函数属性、方法和构造函数</h4>
+	<h5>length属性</h5>
+	<p>在函数体里，arguments.length表示传入函数的实参的个数。而函数本身的length则代表着函数定义时期望的实参个数。下面这个函数用来检测函数的参数是否是期望的
+	<div class="cdiv">
+		function check(args){
+			var actual = args.length;
+			var expected = args.callee.length;
+			if(actual !== expected)
+				throw Error("Actual "+actual +", Expected "+expected);
+		}
+		function f(x,y,z){
+			check(arguments);//这里传入函数的arguments
+			return x+y+z;
+		}
+		console.log(f(1,32));//Error: Actual 2, Expected 3
+	</div>
+	</p>
+	<h5>prototype属性</h5>
+	<p>每个函数都包含一个prototype属性，这个属性是指向一个对象的引用，这个对象称作"原型对象"。</p>
+	<h5>call()和apply()</h5>
+	<p>我们可以将call()和apply()看做是某个对象的方法，通过调用方法的形式来间接调用函数。要想一对象o的方法调用函数f(),可以这样使用:
+	<div class="cdiv">
+		f.call(o);
+		f.apply(o);
+	</div>
+	对于call()，第一个调用上下文实参之后的所有参数就是要传入待调用函数的值。apply()与call()类似，但是它的参数都存在数组中：
+	<div class="cdiv">
+		f.call(o,1,2);
+		f.apply(o,[1,2]);
+		var arr=[1,2,33,21,25];
+		var biggest = Math.max.apply(Math,arr);//33
+	</div>
+	</p>
+	<h5>bind()方法</h5>
+	<p>将函数绑定在对象上</p>
+	</body>
+</html>

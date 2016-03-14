@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>实例1</title>
+</head>
+<body>
+	<script src="util.js"></script>
+	<script type="text/javascript">
+		var o={x:1,y:1};
+		o.add=function(){this.result=this.x+this.y;};
+		o.add();//调用add
+		console.log(o.result);
+		
+		var arr=[];
+		getPropName(o,arr);
+		console.log(arr);
+		
+		console.log(max(1,23,4,5,19));
+		
+		var a=[1,2,3,4,5,6,0];
+		var b=[];
+		easycopy({from:a, to:b, length:7});
+		console.log(b);
+		
+		function square(x){return x*x};
+		var s=square;
+		console.log(s(3));
+		
+		var arr=[function(x){return x*x;},12,34];//将函数赋值给数组元素
+		console.log(arr[0](5));//25
+		
+		//初始化函数的counter属性
+		uniqueInteger.counter = 0;
+		function uniqueInteger(){
+			return uniqueInteger.counter++;
+		} 
+		
+		var scope="global scope";
+		function checkscope(){
+			var scope="local scope";
+			function f(){return scope;}
+			return f;
+		}
+		console.log(checkscope()());//local scope
+		
+		//闭包版本的uniqueInteger
+		var uniqueNum =(function (){
+			var counter=0;
+			return function(){
+				return counter++;
+			}
+		}());//立即执行初始化
+		
+		function unique(){
+			var counter=0;
+			return function(){
+				return counter++;
+			}
+		}
+		
+		var b=uniqueNum;
+		console.log(b()+","+b()+","+b()+","+b());
+		
+		b=unique();//将unique的返回值赋给变量b
+		console.log(b()+","+b()+","+b()+","+b());
+		
+		function counter(){
+			var n=0;
+			return {
+				count:function(){return n++;},
+				reset:function(){ n =0 ;}
+			};
+		}
+		var c=counter(),d=counter();//创建两个计数器
+		c.count();d.count();
+		c.reset();
+		console.log(c.count()+","+d.count());
+		
+		var obj = {};
+		addPrivateProperty(obj,"Name",function(x){return typeof x=="string";});
+		obj.setName("Frank");
+		console.log(obj.getName());
+		
+		function constfuncs(){
+			var funcs=[];
+			for(var i=0;i<10;i++){
+				funcs[i]=function(){return i;}
+			}
+			return funcs;
+		}
+		var funcs = constfuncs();
+		console.log(funcs[5]());//这里值为10
+		
+		function f(x,y,z){
+			check(arguments);//这里传入函数的arguments
+			return x+y+z;
+		}
+		console.log(f(1,32,11));
+		var arr=[1,2,33,21,25];
+		var biggest = Math.max.apply(Math,arr);//
+		console.log(biggest);
+		console.log(Math.max(12,23,21));
+		
+		function f(y){return this.x+y;}
+		var o ={x:1};
+		var g=bind(f,o);
+		console.log(g(2));
+	</script>
+</body>
+</html>
