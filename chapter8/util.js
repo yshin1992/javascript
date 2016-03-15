@@ -142,8 +142,8 @@ function check(args){
  * @param {Object} o 对象
  */
 function bind(f,o){
-//	if(f.bind(o)) return f.bind(o);
-//	else 
+	if(f.bind(o)) return f.bind(o);
+	else 
 		return function(){
 			return f.apply(o,arguments)
 		} ;

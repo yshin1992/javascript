@@ -260,6 +260,32 @@ span.warn{color:red;font-style:italic;}
 	</div>
 	</p>
 	<h5>bind()方法</h5>
-	<p>将函数绑定在对象上</p>
+	<p>将函数绑定在对象上。调用方法:<code>f.bind(obj)</code>,这个方法返回一个新的函数。可以使用如下代码实现函数到对象的绑定：
+	<div class="cdiv">
+		function bind(f,o){
+			if(f.bind(o)) return f.bind(o);
+			else 
+				return function(){
+					return f.apply(o,arguments)
+				} ;
+		}
+		
+		//currying
+		var sum=function(x,y){return x+y;};
+		var succ=sum.bind(null,3);
+		succ(2);//==>5:x绑定到3，并传入2作为实参y
+	</div>
+	</p>
+	<h5>toString()方法</h5>
+	<p>函数的toString()方法大多数都会返回其完整源码。</p>
+	<h5>Function()构造函数</h5>
+	<p>Function()构造函数可以传入任意数量的字符串实参，最后一个实参表示的文本就是函数体。
+	<br/>另外要注意Function()所创建的函数的作用域是全局作用域。并且每次调用Function()函数的时候都会解析函数体，并创建新的函数对象。
+	<div class="cdiv">
+		var f=new Function("x","y","return x+y;");
+		//等价于
+		function add(x,y){return x+y;}
+	</div>
+	</p>
 	</body>
 </html>
