@@ -197,7 +197,35 @@ function partialLeft(f/**,....*/){
 	var args=arguments;//保存外部的实参数组
 	return function(){//返回这个函数
 		var a=array(args,1); //处理外部的第一个args
-		a.concat(array(arguments)); //然后增加所有的内部参数
+		a=a.concat(array(arguments)); //然后增加所有的内部参数
 		return f.apply(this,a); //然后基于这个实参列表调用f()
 	};
 }
+
+//将函数的参数从左传递至右侧
+function partialRight(f/**,...*/){
+	var args=arguments;
+	return function(){
+		var a=array(arguments);
+		a=a.concat(array(args,1));
+		return f.apply(this,a);
+	}
+}
+
+function partial(f/**,...*/){
+	var args=arguments;
+	return function(){
+		var a=array(args,1);
+		var i=0,j=0,len=a.length;
+		//填充外部函数undefined的参数
+		for(;i<len;i++){
+			if(a[i]===undefined)
+				a[i]=arguments[j++];
+		}
+		//把arguments剩下的参数都放进去
+		a=a.concat(array(arguments,j));
+		return f.apply(this,a);
+	}
+}
+
+
