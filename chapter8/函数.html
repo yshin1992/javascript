@@ -280,12 +280,62 @@ span.warn{color:red;font-style:italic;}
 	<p>函数的toString()方法大多数都会返回其完整源码。</p>
 	<h5>Function()构造函数</h5>
 	<p>Function()构造函数可以传入任意数量的字符串实参，最后一个实参表示的文本就是函数体。
-	<br/>另外要注意Function()所创建的函数的作用域是全局作用域。并且每次调用Function()函数的时候都会解析函数体，并创建新的函数对象。
+	<br/>另外要注意Function()所创建的函数的作用域是全局作用域。并且每次调用Function()函数的时候都会解析函数体，并创建新的函数对象。因此在循环体里使用Function创建相同的函数效率很低。在实际中的编程尽可能少使用Function()构造函数。
 	<div class="cdiv">
 		var f=new Function("x","y","return x+y;");
 		//等价于
 		function add(x,y){return x+y;}
 	</div>
+	</p>
+	<h5>可调用的对象</h5>
+	<p>"可调用的对象"是一个对象，可以在函数表达式中调用这个对象。所有的函数都是可调用的，但并非所有的可调用对象都是函数。
+	</p>
+	<h4>函数式编程</h4>
+	<h5>使用函数处理数组</h5>
+	<p>先来看看非函数式编程风格的代码：
+		<div class="cdiv">
+				var data=[1,1,3,5,5];
+				var total=0;
+				for(var i=0,len=data.length;i<len;i++){
+					total+=data[i];
+				}
+				var mean=total/data.length;//平均数
+				//计算标准差
+				total=0;
+				for(var i=0,len=data.length;i<len;i++){
+					var deviation = data[i] - mean;
+					total+=deviation*deviation;
+				}
+				var stddev=Math.sqrt(total/(data.length-1));
+		</div>
+		再来看看函数式编程的风格:
+		<div class="cdiv">
+			var sum = function(x,y){return x+y;}
+			var square = function(x){return x*x;}
+			var mean = data.reduce(sum)/data.length;
+			var deviations=data.map(function(value,index,array){return value-mean;});
+			var stddev = deviations.map(square).reduce(sum)/(data.length-1);
+		</div>
+	</p>
+	<h5>高阶函数</h5>
+	<p>所谓高阶函数就是操作函数的函数:
+	<div>
+		function not(f){
+			return function(){
+				var result=f.apply(this,arguments);
+				return !result;
+			};
+		}
+		var even=function(x){return x%2==0;}
+		var odd=not(even);
+		console.log([1,3,5,5].every(odd));
+	</div>
+	</p>
+	<h5>不完全函数</h5>
+	<p>将函数f(1,2,3,4,5,6)的调用等价于f(1,2)(3,4)(5,6)
+		<div class="cdiv">
+			
+		</div>
 	</p>
 	</body>
 </html>

@@ -148,3 +148,56 @@ function bind(f,o){
 			return f.apply(o,arguments)
 		} ;
 }
+
+/**
+ * 对于每个数组元素调用函数f(),并返回一个数组
+ */
+var map = Array.prototype.map?function(a,f){return a.map(f);}:function(a,f){
+	var result=[];
+	for(var i=0,len=a.length;i<len;i++){
+		if(i in a)
+			result[i]=f.call(null,a[i],i,a);
+	}
+	return result;
+}
+
+//使用函数f()和可选的初始值将数组a减值一个值
+var reduce=Array.prototype.reduce?function(a,f,initial){
+	if(arguments.length>2) return a.reduce(f,initial);
+	return a.reduce(f);
+	}:function(a,f,initial){
+		var i=0,len=a.length,accumulator;
+		//以特定的初始值开始，否则第一个值取自a
+		if(arguments.length >2) accumulator = initial;
+		else{
+			//找到数组中第一个已定义的索引
+			if(len==0) throw TypeError();
+			while(i<len){
+				if(i in a){
+					accumulator = a[i++];break;
+				}
+				else i++;
+			}
+			if(i==len) throw TypeError();
+		}
+		//对于剩下的元素依次调用f()
+		while(i<len){
+			if(i in a){
+				accumulator = f.call(undefined,accumulator,a[i],i,a);
+			i++;
+			}
+		}
+};
+
+//实现一个工具函数将类数组对象转换为真正的数组对象
+function array(a,n){return Array.prototype.slice.call(a,n||0);}
+
+//这个函数的实参传递至左侧	
+function partialLeft(f/**,....*/){
+	var args=arguments;//保存外部的实参数组
+	return function(){//返回这个函数
+		var a=array(args,1); //处理外部的第一个args
+		a.concat(array(arguments)); //然后增加所有的内部参数
+		return f.apply(this,a); //然后基于这个实参列表调用f()
+	};
+}
