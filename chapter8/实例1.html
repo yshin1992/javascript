@@ -191,7 +191,9 @@
 		var stddev=sqrt(product(reduce(map(data,compose(square,partial(sum,neg(mean)))),sum),reciprocal(sum(data.length,-1))));
 		console.log(stddev);
 
-		
+		//缓存
+		var gcdmemo=memorize(gcd);
+		console.log(gcdmemo(85,187));
 	</script>
 </body>
 </html>

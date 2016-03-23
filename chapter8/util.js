@@ -228,4 +228,33 @@ function partial(f/**,...*/){
 	}
 }
 
+/**
+ * 返回f()的带有记忆功能的版本
+ * 只有当f()的实参的字符串表示都不同时它才会工作
+ */
+function memorize(f){
+	var cache={};//将值保存在闭包内
+	return function(){
+		//将参数转换成字符串形式，并将其缓存为键值
+		var key=arguments.length+Array.prototype.join.call(arguments,",");
+		if(key in cache)
+			return cache[key];
+		else
+			return cache[key]=f.apply(this,arguments);
+	} 
+	
+}
+
+/**
+ * 求最大公约数
+ * 使用欧几里得算法
+ * @param m
+ * @param n
+ */
+function gcd(a,b){
+	var t;
+	if(a<b) t=a,a=b,b=t; //确保a>b
+	while(b!=0) t=b,b=a%b,a=t;
+	return a;
+}
 
