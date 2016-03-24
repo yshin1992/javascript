@@ -1,0 +1,40 @@
+code{
+	background: gray;
+	color:white;
+	font:italic 14px sans;
+}
+
+h3{
+	counter-increment: chapter;
+	counter-reset: sec;
+}
+
+h4{
+	counter-increment: sec;
+	counter-reset: episode;
+}
+
+h5{
+	counter-increment: episode;
+}
+
+h3,h4,h5{
+	margin-left:1em;
+}
+
+h3:BEFORE {
+	content: "9." counter(chapter) " "
+}
+
+h4:BEFORE {
+	content: "9." counter(chapter) "." counter(sec) " "
+}
+
+h5:BEFORE {
+	content: "9." counter(chapter) "." counter(sec) "." counter(episode) " "
+}
+
+cdiv{
+	white-space: pre;
+	border:1px solid blue;
+}
