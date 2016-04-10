@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+	</head>
+	<body>
+	<script>
+		//JavaScript是弱类型语言，不同的值之间能够进行自由转换
+		//JavaScript中除了以下值外，其余的值都会转换为true
+		console.log(new Boolean(NaN));//NaN
+		console.log(new Boolean(""));//""空字符串
+		console.log(new Boolean(null));
+		console.log(new Boolean(0));
+		console.log(new Boolean(undefined));
+		console.log(new Boolean({}));
+		console.log(new Boolean([]));
+		
+		//null和undefined
+		console.log(typeof null);
+		console.log(typeof undefined);
+		
+		//包装对象
+		var s1="Hello,world";
+		s1.len = 5;//注意这里会创建一个临时的包装对象
+		var t = s1.len;//这个临时的包装对象会在使用完后就丢弃，因此这里的t的值是undefined.
+		console.log(t);
+		//但是对于显示的包装对象则不一样
+		var s2=new String(s1);
+		t=s2.len=5;
+		console.log(t);
+		//对于包装对象和其原始值用相等==比较
+		console.log(s1==s2);//true
+		//但是用恒等比较===
+		console.log(s1===s2);
+		//再来用typeof运算符
+		console.log(typeof s1);//string
+		console.log(typeof s2);//object
+		//注意对于原始值是不能修改的，但是对象打引用是可以修改的
+		//对于比较运算符==和===
+		//这里先看一下恒等运算符的比较
+		//两个值类型不同打话则一定为false
+		console.log("0"===0);//false
+		console.log(null === null);//true
+		console.log(undefined === undefined);//true
+		console.log(NaN ===NaN);//false
+		console.log(null === undefined);//false
+		//恒等不会进行值转换，所以比较好比较
+		//但是==会进行灵活的类型转换，这里要做进一步讨论
+		//这里先来看一下undefined和null
+		console.log(null == undefined); //true
+		//再来看一下false和true
+		console.log(false == 0);//true,因为false自动会转换成0
+		console.log(true == 1);//true,因为true会自动转换成1
+		//再来看一下字符串的转换
+		console.log(0 == "0");//true
+		//再来看一下字符串和布尔值之间的比较
+		console.log("1" == true);//true
+		//再来开一下对象和字符串及布尔值之间的比较
+		console.log("1" == [1]);//这里相等的是因为[1]的原始值就是1
+		
+		//再来看一些显示的类型转换
+		//最简单的就是使用构造函数
+		var num = new String(12);
+		console.log(num);
+
+		//再来看一些惯用的转换
+		var s = 12 +"";
+		s.len=5;
+		t=s.len;
+		console.log(typeof s);//string
+		console.log(t);//可以看到输出打结果是5而不是undefined，因为
+		//另外看一些转换的技巧
+		var b = false;
+		console.log(+b);//0
+		var c = !!"string";//true;
+		console.log(c);
+	</script>
+	</body>
+</html>

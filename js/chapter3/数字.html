@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+	</head>
+	<body>
+	<script>
+		//数字直接量（JavaScript之中不区分整数和浮点数)
+		var dec=122;
+		var oct=027;//八进制数，但不推荐使用
+		var hex=0x122;//十六进制
+		//浮点数的表示
+		//[digit][.digit][(E|e)(+|-)digit]
+		var f1= 22.32;
+		var f2= 12.3E3;
+		var f3= 122e-3;
+		console.log(f2);//12300
+		console.log(f3);//0.122
+		//JavaScript中算数运算符
+		console.log(Math.random()*100);//100以内的随机数
+		console.log(Math.floor(12.77));//地板函数
+		console.log(Math.ceil(12.09));//天花板函数
+		console.log(Math.round(12.499));//四舍五入函数
+		console.log(Math.sqrt(2.25));//平方根函数
+		console.log(Math.sin(Math.PI));//数学sin函数
+		console.log(Math.cos(1/6));//数学cos函数
+		console.log(Math.LN10);//
+		console.log(Math.log(100)/Math.LN10);//以10为底的100的对数
+		console.log(Math.min(2,44,1));//min函数
+		console.log(Math.max(2,554,321));//max函数
+		console.log(Math.abs(-12));//绝对值函数
+		console.log(Math.exp(2));//e的2次幂
+		console.log(Math.pow(2,4));//2的4次幂
+		//JavaScript中的上溢和下溢
+		//上溢
+		console.log(12/0);//无穷大Infinity
+		console.log(Infinity);
+		
+		//四舍五入错误
+		var x=0.3-0.2;
+		var y = 0.2-0.1;
+		console.log(x==y);
+		//日期和时间
+		var date=new Date();
+		console.log("Year:"+date.getFullYear()+"\tMonth:"+
+		date.getMonth()+"\tDay:"+date.getDate()+"\tHour:"+
+		date.getHours()+"\tMinute:"+date.getMinutes()+"\tSecond:"+
+		date.getSeconds());
+		console.log(date.getTime());
+		//字符串（文本）
+		var str1= "Hello,world";
+		//字符串的常用方法
+		var arr = str1.split(",");
+		arr.forEach(function(elem,index,self_arr){
+			console.log(elem,index,self_arr);});
+		var str2=str1.substring(str1.indexOf(","));
+		console.log(str2);
+		str2=str1.slice(2);//llo,world
+		console.log(str2);
+		str2=str1.concat("append");
+		console.log(str2);
+		str2=str1.substring(str1.lastIndexOf("o"),3);
+		console.log(str2);//orld
+		//substring(start_index,end_index)
+		//substr(start_index,count);
+		str2=str1.substr(3,5);
+		console.log(str2);
+		str2=str1.replace("o","O");
+		console.log(str2);
+		str2=str1.replace(/o/g,"O");
+		console.log(str2);
+		str2=str1.toUpperCase();
+		console.log(str2);
+
+		//charAt()
+		/**
+		for(var i=0,len=str1.length;i<len;i++){
+			console.log(str1.charAt(i));
+		}*/
+		
+
+
+	</script>
+	</body>
+</html>
+
