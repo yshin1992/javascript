@@ -4,15 +4,32 @@
 			var scope="global";
 			function f2(){
 				console.log(scope);//undefined
-				var scope="local";
+				var scope="local";//变量在这里赋值，但变量本身在函数体内部任何地方均是有定义的
 				console.log(scope);
 			}
+			
+			f2();
 			function f(){
 				console.log(scope);//global
 				scope="local";
 				console.log(scope);
 			}
+			f();
+			function test(o)
+			{
+				var i=0;
+				if(typeof(o) == "object")
+				{
+					var j=0;
+					for(var k=0;k<10;k++){
+						;
+					}
+					console.log(k);
+				}	
+				console.log(j);
+			}
 			
+			test(null);
 			var val1=1;
 			fakeval=2;
 			var res1=delete val1;//false；变量没有被删除

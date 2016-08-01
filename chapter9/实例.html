@@ -11,8 +11,17 @@
   		var r=range(1,5);
   		var isInclude=r.includes(2);
   		console.log(isInclude);
-  		r.foreach(console.log);
-  		console.log(r);
+  		/* r.foreach(document.write); */
+  		console.log(r.toString());
+  		
+  		//使用构造函数的方式创建对象
+  		var R = new Range(1,10);
+  		isInclude = R.includes(8);
+  		console.log(isInclude);
+  		console.log(R.toString());
+  		
+  		var simpleRange = new SimpleRange(1,10);
+  		console.log(simpleRange.toString());
   	</script>
   </body>
 </html>

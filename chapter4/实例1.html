@@ -5,6 +5,18 @@
 </head>
 <body>
 <script type="text/javascript">
+
+//Object
+var Point=function(x,y){
+		this.x = x;
+		this.y = y;
+		this.logger=function(){
+			document.write("x="+x+",y="+y);
+		}
+}
+
+var p1 = new Point(12,16);
+p1.logger();
 var var1=1+{};
 console.log(var1);
 var var2=true+true;

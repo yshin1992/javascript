@@ -37,6 +37,15 @@ function max(){
 }
 
 /**
+ * 获取参数中的最大值(方法二)
+ */
+function max2(){
+	return Array.prototype.reduce.call(arguments,function(x,y){
+		return x>y?x:y;
+	});
+}
+
+/**
  * 数组复制
  * @param {Object} from
  * @param {Object} from_start

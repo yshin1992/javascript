@@ -149,6 +149,15 @@
 		var str_arr_like_call = Array.prototype.join.call(a,"+");
 		console.log(str_arr_like_call);
 		console.log(Array.slice(a,0));//这个写法只在FireFox中支持
+		
+		var str="12345678";
+		Array.prototype.forEach.call(str,function(value){
+			console.log(value);
+		});
+		var res = Array.prototype.map.call(str,function(value){
+			return Number(value)+1;
+		});
+		console.log(res);
 	</script>
 </body>
 </html>

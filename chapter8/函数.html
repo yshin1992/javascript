@@ -115,7 +115,7 @@ span.warn{color:red;font-style:italic;}
 	function arraycopy(from,from_start,to,to_start,length){
 		if(!Array.isArray(from) || !Array.isArray(to))
 			throw "参数错误";
-		for(var i=from_start,j=to_start;i<from_start+length;i++,j++){
+		for(var i=from_start,j=to_start;i&lt;from_start+length;i++,j++){
 			to[j]=from[i];
 		}
 	}
@@ -296,13 +296,13 @@ span.warn{color:red;font-style:italic;}
 		<div class="cdiv">
 				var data=[1,1,3,5,5];
 				var total=0;
-				for(var i=0,len=data.length;i<len;i++){
+				for(var i=0,len=data.length;i&lt;len;i++){
 					total+=data[i];
 				}
 				var mean=total/data.length;//平均数
 				//计算标准差
 				total=0;
-				for(var i=0,len=data.length;i<len;i++){
+				for(var i=0,len=data.length;i&lt;len;i++){
 					var deviation = data[i] - mean;
 					total+=deviation*deviation;
 				}

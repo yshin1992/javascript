@@ -27,17 +27,21 @@
 			document.write("<br/>"+str.match(pattern));
 			document.write("<br/>"+str.replace(pattern,"#"));
 			document.write("<br/>"+str.split(/\D+/));
-			
+			//null和undefined
+			document.write("<br/>typeof(undefind) == "+typeof(undefined));
+			document.write("<br/>typeof(null) == "+typeof(null));
 			//比较
-			document.write("<br/>null == undefined //"+(null == undefined));
-			document.write("<br/>null == 0 //"+(null == 0));
-			document.write("<br/>null == false //"+(null == false));
-			document.write("<br/>null == 'false' //"+(null == 'false'));
-			document.write("<br/>false == 'false' //"+(false == 'false'));
-			document.write("<br/>false == 0 //"+(false == 0));
-			document.write("<br/>'false' == 0 //"+('false' == 0));
-			document.write("<br/>false == '0' //"+(false == "0"));
-			
+			document.write("<br/>null == undefined //"+(null == undefined));//true
+			document.write("<br/>null == 0 //"+(null == 0));//false原始值比较，特殊处理不会进行转换
+			document.write("<br/>null == false //"+(null == false));//false,不会进行原始值比较
+			document.write("<br/>null == 'false' //"+(null == 'false'));//false
+			document.write("<br/>false == 'false' //"+(false == 'false'));//false
+			document.write("<br/>false == 0 //"+(false == 0));//true，此处进行了转换
+			document.write("<br/>'false' == 0 //"+('false' == 0));//false
+			document.write("<br/>false == '0' //"+(false == "0"));//true
+			document.write("<br/>false == ''//"+(false == ''));//ftrue
+			document.write("<br/>0 == ''//"+(0 == ''));//ftrue
+			document.write("<br/>0,false及''可以看做是一类，统称假值；false和undefined统称为空值");
 			//对象转字符串
 			var obj1=new Object();
 			obj1.name="Jane";

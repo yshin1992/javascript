@@ -50,3 +50,59 @@ range.methods={
 			return "("+this.from+"..."+this.to+");";
 		}
 };
+
+/**
+ * 使用构造函数的方式定义范围类
+ */
+function Range(from,to){
+	this.from = from;
+	this.to = to;
+}
+/**
+ * 所有的范围对象都继承自这个对象
+ * 属性的名称必须是prototype
+ */
+Range.prototype = {
+	constructor:Range,//显示设置构造函数反向引用
+	includes:function(x){return this.from <= x && this.to >=x;},
+	foreach:function(f){
+		for(var x = Math.ceil(this.from);x<=this.to;x++){
+			f(x);
+		}
+	},
+	toString:function(){
+		return ("("+this.from+"...."+this.to+")");
+	}
+}
+//还有一种方法定义类：使用预定义的原型对象
+Range.prototype.say=function(x){console.log(x);}//增加一个say方法
+
+
+function extend(o, p){
+    for (prop in p) {
+        o[prop] = p[prop];
+    }
+    return o;
+}
+
+/**
+ * 用于定义类的函数
+ * @param constructor 用以设置实例的属性的函数
+ * @param methods 实例的方法，复制至原型中
+ * @param statics 类属性，复制至构造函数中
+ * @returns
+ */
+function defineClass(constructor,methods,statics){
+	if(methods) extend(constructor.prototype,methods);
+	if(statics) extend(constructor,statics);
+	return constructor;
+}
+//使用另一种方式定义
+var SimpleRange = defineClass(function(f,t){
+		this.f = f; this.t = t;
+	},{
+		includes:function(x){return this.f <= x && this.t >=x;},
+		toString:function(){return "("+this.f+"...."+this.t+")";}
+	},{
+		upto:function(t){return new SimpleRange(0,t);}
+});

@@ -26,7 +26,8 @@
 		console.log(t);
 		//但是对于显示的包装对象则不一样
 		var s2=new String(s1);
-		t=s2.len=5;
+		s2.len=5;
+		t=s2.len;
 		console.log(t);
 		//对于包装对象和其原始值用相等==比较
 		console.log(s1==s2);//true
@@ -38,7 +39,7 @@
 		//注意对于原始值是不能修改的，但是对象打引用是可以修改的
 		//对于比较运算符==和===
 		//这里先看一下恒等运算符的比较
-		//两个值类型不同打话则一定为false
+		//两个值类型不同的话则一定为false
 		console.log("0"===0);//false
 		console.log(null === null);//true
 		console.log(undefined === undefined);//true
@@ -68,7 +69,7 @@
 		s.len=5;
 		t=s.len;
 		console.log(typeof s);//string
-		console.log(t);//可以看到输出打结果是5而不是undefined，因为
+		console.log(t);//可以看到输出打结果是undefined
 		//另外看一些转换的技巧
 		var b = false;
 		console.log(+b);//0
